@@ -4,8 +4,6 @@
 
 **PURA SONRISA** es una aplicación web orientada a la gestión de una clínica dental. El sistema permite administrar citas, historial de pacientes y operaciones internas mediante un panel de control, diferenciando roles entre empleados y clientes.
 
-El objetivo del proyecto es consolidar una arquitectura moderna desacoplada, separando frontend y backend, e integrando automatización y funciones básicas de inteligencia artificial.
-
 ---
 
 ## 🧱 Stack Tecnológico
