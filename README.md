@@ -1,59 +1,270 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+﻿# PURA SONRISA
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Descripción del Proyecto
 
-## About Laravel
+**PURA SONRISA** es una aplicación web orientada a la gestión de una clínica dental. El sistema permite administrar citas, historial de pacientes y operaciones internas mediante un panel de control, diferenciando roles entre empleados y clientes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+El objetivo del proyecto es consolidar una arquitectura moderna desacoplada, separando frontend y backend, e integrando automatización y funciones básicas de inteligencia artificial.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🧱 Stack Tecnológico
 
-## Learning Laravel
+### 🔹 Frontend
+- HTML
+- TypeScript
+- Vite
+- Tailwind
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🔹 Backend
+- Laravel
+- PHP
+- Composer
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🔹 Base de Datos
+- MariaDB (gestionada desde XAMPP)
 
-## Laravel Sponsors
+### 🔹 Infraestructura
+- XAMPP (Apache + MySQL/MariaDB)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 🔹 Automatización & IA
+- n8n (opcional)
+- Funciones de IA (agents.md, skills)
 
-### Premium Partners
+### 🤖 Skills instaladas (Copilot Agent)
+- [`laravel-specialist`](.agents/skills/laravel-specialist/SKILL.md) — Especialista en Laravel 10+, Eloquent, Sanctum, Livewire, Horizon y Pest
+- [`frontend-design`](.agents/skills/frontend-design/SKILL.md) — Diseño de interfaces frontend de calidad producción con HTML/CSS/Tailwind
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🔹 Control de Versiones
+- Git
+- GitHub
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🏗️ Arquitectura del Sistema
 
-## Code of Conduct
+El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel):
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+[ frontend ] → HTML + Tailwind
+[ backend ]  → Laravel + PHP
+[ db ]       → MariaDB (XAMPP)
+[ n8n ]      → Automatizaciones (opcional)
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ⚙️ Funcionalidades
 
-## License
+### 🗓️ Gestión de Citas
+- Reserva de citas por parte de clientes
+- Edición y eliminación de citas
+- Creación manual desde panel admin
+- Envío automático de recordatorios por correo
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 👤 Sistema de Usuarios
+
+**Empleado**
+- Gestión completa de citas
+- Acceso a historial
+- CRUD de datos
+
+**Cliente**
+- Reservar citas
+- Cancelar citas
+- Ver citas futuras
+
+### 🧾 Historial del Paciente
+- Sistema de notas por paciente
+- Registro de tratamientos y observaciones
+
+### 🤖 Chatbot (Simulación)
+- Respuestas automáticas a preguntas frecuentes
+- Soporte básico inicial
+
+### 📊 Estadísticas
+- Número de citas
+- Servicios más demandados
+- Actividad de usuarios
+
+---
+
+## 🔀 Estrategia de Ramas (GitHub)
+
+| Rama   | Descripción         |
+|--------|---------------------|
+| `main` | Versión estable     |
+| `dev`  | Desarrollo activo   |
+
+---
+
+## 🎯 Buenas Prácticas
+
+- Uso de ramas con git
+- Commits claros
+- Uso de `.gitignore`
+- Código comentado claramente
+- Nomenclatura: `PascalCase` (inicial mayúscula)
+- Documentación actualizada
+
+---
+
+## 📌 Colores
+
+| Nombre | Hex       |
+|--------|-----------|
+| Blanco | `#fffbf4` |
+| Azul   | `#08beff` |
+| Rosa   | `#cc0247` |
+
+---
+
+## 🚀 Instalación del Proyecto
+
+Guía completa para instalar y ejecutar PuraSonrisa desde cero en un entorno local con Windows y XAMPP.
+
+### ✅ Requisitos previos
+
+Antes de empezar, asegúrate de tener instalado:
+
+| Herramienta | Versión mínima | Descarga |
+|-------------|---------------|----------|
+| XAMPP       | 8.2+          | https://www.apachefriends.org |
+| PHP         | 8.2+          | Incluido en XAMPP |
+| Composer    | 2.x           | https://getcomposer.org |
+| Node.js     | 18+           | https://nodejs.org |
+| Git         | cualquiera    | https://git-scm.com |
+
+---
+
+### Paso 1 — Clonar el repositorio
+
+Abre una terminal en la carpeta `htdocs` de XAMPP y clona el proyecto:
+
+```bash
+cd C:\xampp\htdocs
+git clone https://github.com/Jairo-19/PuraSonrisa.git
+cd PuraSonrisa
+```
+
+> Esto descarga todos los archivos del proyecto en `C:\xampp\htdocs\PuraSonrisa`.
+
+---
+
+### Paso 2 — Instalar dependencias de PHP
+
+Composer descarga todas las librerías del backend (Laravel y sus paquetes):
+
+```bash
+composer install
+```
+
+> Si no tienes Composer instalado globalmente, descárgalo desde https://getcomposer.org e instálalo antes de ejecutar este comando.
+
+---
+
+### Paso 3 — Instalar dependencias de Node.js
+
+npm descarga Vite, Tailwind y el resto de herramientas de frontend:
+
+```bash
+npm install
+```
+
+---
+
+### Paso 4 — Configurar el archivo de entorno
+
+Laravel usa un archivo `.env` para gestionar variables de configuración. Copia el archivo de ejemplo:
+
+```bash
+copy .env.example .env
+```
+
+Luego genera la clave de la aplicación (necesaria para cifrado y sesiones):
+
+```bash
+php artisan key:generate
+```
+
+---
+
+### Paso 5 — Configurar la base de datos
+
+1. Abre XAMPP y arranca los servicios **Apache** y **MySQL**
+2. Entra a `http://localhost/phpmyadmin`
+3. Crea una base de datos nueva llamada `PuraSonrisa`
+4. Abre el archivo `.env` y ajusta estas líneas:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=PuraSonrisa
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+> Por defecto XAMPP usa el usuario `root` sin contraseña. Si tienes contraseña configurada, ponla en `DB_PASSWORD`.
+
+---
+
+### Paso 6 — Ejecutar las migraciones
+
+Las migraciones crean todas las tablas necesarias en la base de datos:
+
+```bash
+php artisan migrate
+```
+
+> Si quieres también cargar datos de prueba, ejecuta:
+> ```bash
+> php artisan migrate --seed
+> ```
+
+---
+
+### Paso 7 — Compilar los assets del frontend
+
+Compila los archivos de Tailwind y TypeScript con Vite:
+
+```bash
+# Compilación única (producción)
+npm run build
+
+# O en modo desarrollo con recarga automática
+npm run dev
+```
+
+---
+
+### Paso 8 — Iniciar el servidor
+
+Arranca el servidor de desarrollo de Laravel:
+
+```bash
+php artisan serve
+```
+
+La aplicación estará disponible en:
+
+```
+http://localhost:8000
+```
+
+---
+
+### 🗂️ Resumen de comandos
+
+```bash
+git clone https://github.com/Jairo-19/PuraSonrisa.git
+cd PuraSonrisa
+composer install
+npm install
+copy .env.example .env
+php artisan key:generate
+# (configurar .env con los datos de la BD)
+php artisan migrate
+npm run build
+php artisan serve
+```
