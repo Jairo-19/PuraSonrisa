@@ -13,6 +13,7 @@
 - TypeScript
 - Vite
 - Tailwind
+- [Bootstrap Icons](https://icons.getbootstrap.com/) — instalado en local via `npm i bootstrap-icons`, importado en `resources/css/app.css` con `@import 'bootstrap-icons/font/bootstrap-icons.css'`. Se usa con la clase `<i class="bi bi-nombre-icono">`. Actualmente utilizado en el footer (redes sociales y horario).
 
 ### 🔹 Backend
 - Laravel

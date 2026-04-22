@@ -1,11 +1,12 @@
-<header class="flex items-center justify-between px-8 py-4 bg-[#fffbf4] shadow-sm">
+<!-- Cabecera principal. Se incluye en todas las páginas a través de layouts/master.blade.php -->
+<header class="flex items-center justify-between px-8 py-4 bg-gray-50 shadow-sm">
 
-<!-- Logo de la web -->
+    <!-- Logo: enlaza a la página de inicio -->
     <a href="{{ route('home') }}">
         <img src="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" alt="Logo de PuraSonrisa" class="h-12 w-auto">
     </a>
 
-    <!-- Navegacion de la web -->
+    <!-- Navegación principal: efecto hover con línea rosa que se expande bajo el enlace -->
     <nav>
         <ul class="flex items-center gap-8">
             <li>
@@ -32,7 +33,7 @@
                           after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0
                           after:bg-[#cc0247] after:transition-all after:duration-300
                           hover:after:w-full hover:text-[#cc0247]">
-                    Nosotros
+                    Reserva
                 </a>
             </li>
             <li>
