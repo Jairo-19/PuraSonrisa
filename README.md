@@ -89,10 +89,11 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 
 ## 🔀 Estrategia de Ramas (GitHub)
 
-| Rama   | Descripción         |
-|--------|---------------------|
-| `main` | Versión estable     |
-| `dev`  | Desarrollo activo   |
+| Rama        | Descripción                                  |
+|-------------|----------------------------------------------|
+| `main`      | Versión estable                              |
+| `dev`       | Desarrollo activo                            |
+| `experitar` | Experimentación y pruebas de nuevas ideas    |
 
 ---
 

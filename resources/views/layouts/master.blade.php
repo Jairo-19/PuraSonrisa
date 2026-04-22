@@ -20,6 +20,15 @@
 
 </head>
 <body>
-  
+    <!-- Aqui incluyo el header y el footer para que se muestren en todas las páginas-->
+    @include('layouts.header')
+    
+    <!-- Y aqui va el contenido principal de la página es decir lo diferente en cada página -->
+    <main>
+        @yield('content')
+    </main>
+
+   @include('layouts.footer')
+
 </body>
 </html>
