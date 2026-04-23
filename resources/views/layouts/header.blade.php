@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('reserva') }}"
+                <a href="#"
                    class="relative text-sm font-semibold text-gray-700 pb-1
                           after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0
                           after:bg-[#cc0247] after:transition-all after:duration-300
