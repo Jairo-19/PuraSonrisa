@@ -17,3 +17,5 @@ Route::get('/servicios', [ServiciosController::class, 'index'])->name('servicios
 //Aqui defino la ruta de contacto 
 //es una view porque no necesito un controlador para esta pagina, solo mostrar informacion de contacto
 Route::view('/contacto', 'pagina.contacto')->name('contacto');
+
+
