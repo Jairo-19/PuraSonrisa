@@ -76,11 +76,11 @@
     </section>
 
     <!-- Seccion de servicios generales -->
-    <section class="bg-[#78767c] py-20 px-8">
+    <section style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);" class="py-20 px-8">
 
         <div class="max-w-5xl mx-auto text-center mb-12">
             <h2 class="text-4xl font-bold text-gray-800">Nuestros <span class="text-[#cc0247]">servicios</span></h2>
-            <p class="text-white mt-3 text-lg">Todo lo que necesitas para una sonrisa perfecta</p>
+            <p class=" mt-3 text-lg">Todo lo que necesitas para una sonrisa perfecta</p>
         </div>
 
         <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -49,19 +49,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('servicios') }}"
                        class="text-gray-400 hover:text-[#cc0247] transition-colors duration-300 text-sm">
                         Servicios
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('reserva') }}"
                        class="text-gray-400 hover:text-[#cc0247] transition-colors duration-300 text-sm">
                         Reserva
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('contacto') }}"
                        class="text-gray-400 hover:text-[#cc0247] transition-colors duration-300 text-sm">
                         Contacto
                     </a>

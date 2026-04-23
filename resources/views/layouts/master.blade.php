@@ -13,13 +13,13 @@
     </style>
 
     <!-- Icono de la pestaña -->
-     <link rel="icon" href="{{ asset('images/LogoPuraSonrisa.webp') }}" type="image/webp">
+     <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" type="image/webp">
 
     <!-- Esto es para incluir los archivos de Vite y equivale al enlac e de tailwind -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Bootstrap CSS -->
-    
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <!-- Aqui incluyo el header y el footer para que se muestren en todas las páginas-->
