@@ -6,32 +6,15 @@
 <!-- Contenido principal de la página de contacto -->
 @section('content')
 
-    <!-- Sección hero de contacto -->
-    <section class="hero-contact relative h-[100vh] min-h-[600px] w-full overflow-hidden flex items-center justify-center">
-
-        <!-- Imagen de fondo con zoom suave al cargar -->
-        <div class="hero-bg-contact absolute inset-0"></div>
-
-        <!-- Capa oscura degradada para legibilidad -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20"></div>
-
-        <!-- Contenido de texto centrado con animaciones en cascada -->
-        <div class="relative z-10 text-center px-6">
-
-            <!-- Nombre clínica: aparece primero en rosa -->
-            <h1 class="hero-subtitle text-[#cc0247] text-sm tracking-[0.35em] uppercase font-semibold mb-4 drop-shadow">
-                Pura Sonrisa
+    <!-- Hero de contacto -->
+    <section class="relative w-full overflow-hidden contacto-hero">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <h1 class="text-5xl font-bold text-white drop-shadow-xl tracking-wide text-center leading-tight contacto-titulo">
+                Contacta con <span class="text-[#cc0247]">nosotros</span>
             </h1>
-
-            <!-- Título principal: aparece después -->
-            <h1 class="hero-title text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-xl leading-tight">
-                ¡Contacta con nosotros!
-            </h1>
-
         </div>
-
     </section>
-
 
     <!-- Sección de información de contacto -->
     <section class="bg-[#fffbf4] py-20 px-8">
@@ -93,25 +76,27 @@
     </section>
 
     <style>
-        /* Imagen de fondo: fija para efecto parallax */
-        .hero-bg-contact {
-            background-image: url("{{ asset('imagenes/ClinicaDental.jpg') }}");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            animation: heroZoom 8s ease-out forwards;
-        }
-
-        /* Zoom suave de la imagen al cargar — más pronunciado */
-        @keyframes heroZoom {
-            from { transform: scale(1.18); }
-            to   { transform: scale(1); }
-        }
 
         /* Animación: sube y aparece desde abajo */
         @keyframes fadeSlideUp {
             from { opacity: 0; transform: translateY(28px); }
             to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero de contacto */
+        .contacto-hero {
+            height: 60vh;
+            background-image: url("{{ asset('imagenes/ClinicaDental.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            animation: heroZoom 8s ease-out forwards;
+        }
+        @keyframes heroZoom {
+            from { background-size: 115%; }
+            to   { background-size: 100%; }
+        }
+        .contacto-titulo {
+            animation: fadeSlideUp 0.8s ease both;
         }
 
         /* Animación: aparece con fade simple desde arriba */

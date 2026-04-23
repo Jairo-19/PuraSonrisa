@@ -45,6 +45,13 @@
                     Contacto
                 </a>
             </li>
+            <li>
+                <a href="#"
+                   class="flex items-center justify-center w-9 h-9 rounded-full border-2 border-gray-300 text-gray-600
+                          hover:border-[#cc0247] hover:text-[#cc0247] transition-all duration-300">
+                    <i class="bi bi-person text-lg"></i>
+                </a>
+            </li>
         </ul>
     </nav>
 

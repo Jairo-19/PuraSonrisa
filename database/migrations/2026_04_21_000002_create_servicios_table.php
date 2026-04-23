@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('duracion_minutos');
             $table->boolean('activo')->default(true);
             $table->timestamps();
+            $table->string('imagen')->nullable();
         });
     }
 

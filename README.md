@@ -72,6 +72,8 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 - Reservar citas
 - Cancelar citas
 - Ver citas futuras
+- Ver estadísticas propias (citas realizadas, servicios más usados, etc.)
+- Cerrar sesión
 
 ### 🧾 Historial del Paciente
 - Sistema de notas por paciente
