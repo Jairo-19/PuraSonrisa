@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // Crea la tabla de citas con sus relaciones a usuarios y servicios
     public function up(): void
     {
         Schema::create('citas', function (Blueprint $table) {
@@ -22,6 +23,7 @@ return new class extends Migration
         });
     }
 
+    // Elimina la tabla de citas si se revierte la migración
     public function down(): void
     {
         Schema::dropIfExists('citas');

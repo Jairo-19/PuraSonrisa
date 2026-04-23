@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // Crea la tabla de usuarios con todos sus campos
     public function up(): void
     {
         Schema::create('usuarios', function (Blueprint $table) {
@@ -23,6 +24,7 @@ return new class extends Migration
         });
     }
 
+    // Elimina la tabla de usuarios si se revierte la migración
     public function down(): void
     {
         Schema::dropIfExists('usuarios');

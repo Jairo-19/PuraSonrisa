@@ -21,60 +21,89 @@
 
 </section>
 
+<!-- Sección: Catálogo de servicios -->
+<section style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);" class="py-20 px-6">
 
-
-<!-- Sección: Servicios más populares -->
-<section class="bg-[#fffbf4] py-20 px-6">
-
-    <!-- Título -->
-    <div class="max-w-5xl mx-auto text-center mb-16">
+    <!-- TOP 3 -->
+    <div class="max-w-5xl mx-auto text-center mb-10">
         <h2 class="text-4xl font-bold text-gray-800">
-            Nuestros servicios más <span class="text-[#cc0247]">populares</span>
+            Nuestros 3 mejores <span class="text-[#cc0247]">servicios</span>
         </h2>
-        <div class="mt-3 w-20 h-1 bg-[#cc0247] mx-auto rounded-full"></div>
+        <div class="mt-4 w-20 h-1 bg-gradient-to-r from-[#cc0247] to-[#08beff] mx-auto rounded-full"></div>
     </div>
 
+    <!-- Tarjetas top 3: solo foto, nombre al hover -->
+    <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 mb-20">
+        @foreach($servicios->take(3) as $servicio)
+        <div class="relative rounded-2xl overflow-hidden h-56
+                    shadow-[0_8px_36px_rgba(0,0,0,0.22)]
+                    hover:shadow-[0_18px_56px_rgba(0,0,0,0.35)]
+                    hover:-translate-y-1.5 transition-all duration-300 group">
 
+            <!-- Foto -->
+            @if($servicio->imagen)
+                <img src="{{ asset('imagenes/' . $servicio->imagen) }}"
+                     alt="{{ $servicio->nombre }}"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            @else
+                <div class="w-full h-full bg-[#fffbf4] flex items-center justify-center">
+                    <i class="bi bi-tooth text-5xl text-[#cc0247]/30"></i>
+                </div>
+            @endif
 
+            <!-- Nombre: aparece al hover con overlay oscuro -->
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-end justify-center pb-5">
+                <span class="text-white font-bold text-lg opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300 drop-shadow-lg px-4 text-center">
+                    {{ $servicio->nombre }}
+                </span>
+            </div>
 
+        </div>
+        @endforeach
+    </div>
 
+    <!-- Separador -->
+    <div class="max-w-5xl mx-auto border-t border-gray-300/60 mb-16"></div>
 
+    <!-- Título de sección catálogo completo -->
+    <div class="max-w-5xl mx-auto text-center mb-14">
+        <span class="inline-block text-[#08beff] text-xs tracking-[0.3em] uppercase font-semibold mb-3">Lo que ofrecemos</span>
+        <h2 class="text-4xl font-bold text-gray-800">
+            Todos nuestros <span class="text-[#cc0247]">servicios</span>
+        </h2>
+        <div class="mt-4 w-20 h-1 bg-gradient-to-r from-[#cc0247] to-[#08beff] mx-auto rounded-full"></div>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-    
     <!-- Cards generadas dinámicamente desde la base de datos -->
-    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
 
         @foreach($servicios as $servicio)
-        <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+        <div class="flex flex-col rounded-2xl overflow-hidden bg-white
+                    border border-gray-200
+                    shadow-[0_8px_36px_rgba(0,0,0,0.22)]
+                    hover:shadow-[0_18px_56px_rgba(0,0,0,0.35)]
+                    hover:-translate-y-1.5 transition-all duration-300 h-full">
 
-            <!-- Foto del servicio -->
-            <div class="overflow-hidden h-48">
+            <!-- Foto fija en altura -->
+            <div class="h-44 w-full shrink-0 overflow-hidden">
                 @if($servicio->imagen)
                     <img src="{{ asset('imagenes/' . $servicio->imagen) }}"
                          alt="{{ $servicio->nombre }}"
                          class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                 @else
-                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                        <i class="bi bi-tooth text-5xl text-[#cc0247]/40"></i>
+                    <div class="w-full h-full bg-[#fffbf4] flex items-center justify-center">
+                        <i class="bi bi-tooth text-5xl text-[#cc0247]/30"></i>
                     </div>
                 @endif
             </div>
 
-            <!-- Nombre y descripción -->
-            <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $servicio->nombre }}</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">{{ $servicio->descripcion }}</p>
+            <!-- Línea de acento rosa→azul -->
+            <div class="h-1 shrink-0 bg-gradient-to-r from-[#cc0247] to-[#08beff]"></div>
+
+            <!-- Contenido -->
+            <div class="flex flex-col flex-1 px-6 py-5 gap-2">
+                <h3 class="text-base font-bold text-gray-800 leading-snug">{{ $servicio->nombre }}</h3>
+                <p class="text-gray-500 text-sm leading-relaxed flex-1">{{ $servicio->descripcion }}</p>
             </div>
 
         </div>
@@ -83,19 +112,20 @@
     </div>
 </section>
 
-
-
-
-
 <style>
     .servicios-hero {
         height: 60vh;
         background-image: url("{{ asset('imagenes/ClinicaDental.jpg') }}");
         background-size: cover;
         background-position: center;
+        animation: heroZoom 8s ease-out forwards;
+    }
+    @keyframes heroZoom {
+        from { background-size: 115%; }
+        to   { background-size: 100%; }
     }
     @keyframes slideUp {
-        from { opacity: 0; transform: translateY(20px); }
+        from { opacity: 0; transform: translateY(28px); }
         to   { opacity: 1; transform: translateY(0); }
     }
     .servicios-titulo {

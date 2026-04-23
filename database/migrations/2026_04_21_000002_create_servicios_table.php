@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // Crea la tabla de servicios ofrecidos por la clínica
     public function up(): void
     {
         Schema::create('servicios', function (Blueprint $table) {
@@ -20,6 +21,7 @@ return new class extends Migration
         });
     }
 
+    // Elimina la tabla de servicios si se revierte la migración
     public function down(): void
     {
         Schema::dropIfExists('servicios');

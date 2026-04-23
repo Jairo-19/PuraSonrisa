@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // Crea la tabla del historial clínico de los pacientes
     public function up(): void
     {
         Schema::create('historial_clinico', function (Blueprint $table) {
@@ -17,6 +18,7 @@ return new class extends Migration
         });
     }
 
+    // Elimina la tabla de historial clínico si se revierte la migración
     public function down(): void
     {
         Schema::dropIfExists('historial_clinico');

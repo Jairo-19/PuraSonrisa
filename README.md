@@ -88,6 +88,15 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 - Servicios más demandados
 - Actividad de usuarios
 
+### 🏆 Podio de Servicios Más Pedidos
+- Sección visual en la página de servicios con los 3 servicios más solicitados
+- Diseño de podio: el 1º (centro) es más grande que el 2º (izquierda) y el 3º (derecha)
+- Al pasar el ratón por encima de cada tarjeta se muestra una sombra de color según posición:
+  - 🥇 1º puesto (centro): sombra dorada
+  - 🥈 2º puesto (izquierda): sombra plateada
+  - 🥉 3º puesto (derecha): sombra bronceada
+- Cada tarjeta muestra únicamente la foto del servicio; el nombre aparece al hacer hover
+
 ---
 
 ## 🔀 Estrategia de Ramas (GitHub)

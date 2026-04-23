@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // Crea la tabla de imágenes asociadas al historial clínico
     public function up(): void
     {
         Schema::create('imagenes_clinicas', function (Blueprint $table) {
@@ -19,6 +20,7 @@ return new class extends Migration
         });
     }
 
+    // Elimina la tabla de imágenes clínicas si se revierte la migración
     public function down(): void
     {
         Schema::dropIfExists('imagenes_clinicas');

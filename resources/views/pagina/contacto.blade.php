@@ -17,7 +17,7 @@
     </section>
 
     <!-- Sección de información de contacto -->
-    <section class="bg-[#fffbf4] py-20 px-8">
+    <section style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);" class="py-20 px-8">
         <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-start gap-16">
 
             <!-- Bloque de texto — izquierda -->
