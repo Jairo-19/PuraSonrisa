@@ -160,7 +160,8 @@
                                         {{ strtoupper(substr($u->nombre, 0, 2)) }}
                                     </div>
                                     <div>
-                                        <div class="font-medium text-white">{{ $u->nombre }}</div>
+                                        <a href="{{ route('admin.historial.show', $u) }}"
+                                           class="font-medium text-white no-underline transition-colors hover:text-[#08beff]">{{ $u->nombre }}</a>
                                         <div class="text-[.76rem] text-[rgba(255,255,255,.32)]">{{ $u->email }}</div>
                                     </div>
                                 </div>

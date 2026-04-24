@@ -6,6 +6,7 @@ use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\HistorialClinicoController;
 
 //Aqui defino la ruta para la pagina de inicio
 Route::get('/', HomeController::class)->name('home');
@@ -53,4 +54,9 @@ Route::middleware(['auth', 'empleado'])->prefix('admin')->name('admin.')->group(
     Route::post('/usuarios',                 [AdminController::class, 'store'])->name('usuarios.store');
     Route::get('/usuarios/{usuario}/editar', [AdminController::class, 'editar'])->name('usuarios.editar');
     Route::put('/usuarios/{usuario}',        [AdminController::class, 'update'])->name('usuarios.update');
+
+    // Historial clínico por paciente
+    Route::get('/pacientes/{usuario}/historial',  [HistorialClinicoController::class, 'show'])->name('historial.show');
+    Route::post('/pacientes/{usuario}/historial', [HistorialClinicoController::class, 'store'])->name('historial.store');
+    Route::delete('/historial/{historial}',       [HistorialClinicoController::class, 'destroy'])->name('historial.destroy');
 });
