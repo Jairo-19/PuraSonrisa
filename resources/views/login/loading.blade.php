@@ -86,11 +86,13 @@
         Preparando tu acceso…
     </p>
 
-    <!-- Redirigir al login tras la animación (1.6s) + pequeño margen -->
+    <!-- Redirigir según ?next: 'home' → inicio, cualquier otro → login -->
     <script>
-        // Redirigir al login tras la animación
+        const allowed = { home: "{{ route('home') }}", login: "{{ route('login') }}" };
+        const next    = new URLSearchParams(window.location.search).get('next');
+        const destino = allowed[next] ?? allowed.login;
         setTimeout(function () {
-            window.location.href = "{{ route('login') }}";
+            window.location.href = destino;
         }, 3000);
     </script>
 

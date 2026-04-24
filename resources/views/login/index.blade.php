@@ -29,6 +29,8 @@
         .panel-left-inner p{font-size:.93rem;color:rgba(255,255,255,.5);line-height:1.75;max-width:260px;margin:0 auto 2.5rem}
         .btn-registro{display:inline-block;padding:.75rem 2.2rem;border:2px solid rgba(255,255,255,.28);border-radius:100px;color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:border-color .3s,color .3s,box-shadow .3s}
         .btn-registro:hover{border-color:var(--azul);color:var(--azul);box-shadow:0 0 24px rgba(8,190,255,.2)}
+        .back-home{display:block;margin-top:1.4rem;font-size:.78rem;color:rgba(255,255,255,.28);text-decoration:none;transition:color .25s}
+        .back-home:hover{color:rgba(255,255,255,.7)}
 
         .panel-right{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 4rem;position:relative;overflow:hidden}
         .br1{width:360px;height:360px;background:var(--azul);top:-12%;right:-8%}
@@ -76,6 +78,11 @@
             <p>Regístrate y accede a tu historial, citas y mucho más desde un solo lugar.</p>
             <!-- Enlace al registro (próximo paso) -->
             <a href="{{ route('registro') }}" class="btn-registro">Crear cuenta</a>
+
+            <!-- Volver a inicio pasando por la pantalla de carga -->
+            <a href="{{ route('login.loading') }}?next=home" class="back-home">
+                <i class="bi bi-arrow-left"></i> volver a inicio
+            </a>
         </div>
     </div>
 
