@@ -66,12 +66,15 @@
                             <p class="text-sm font-semibold text-gray-700 truncate">{{ auth()->user()->nombre ?? auth()->user()->email }}</p>
                         </div>
 
-                        {{-- Cerrar sesión (sin funcionalidad por ahora) --}}
-                        <button class="w-full text-left px-4 py-2 text-sm text-[#cc0247] font-semibold
-                                       hover:bg-red-50 transition-colors duration-200 flex items-center gap-2 mt-1">
-                            <i class="bi bi-box-arrow-right"></i>
-                            Cerrar sesión
-                        </button>
+                        <!-- Cerrar sesión -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-[#cc0247] font-semibold
+                                           hover:bg-red-50 transition-colors duration-200 flex items-center gap-2 mt-1">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Cerrar sesión
+                            </button>
+                        </form>
                     </div>
                 @else
                     {{-- Usuario no autenticado: lleva a la pantalla de carga antes del login --}}

@@ -75,6 +75,21 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 - Ver estadísticas propias (citas realizadas, servicios más usados, etc.)
 - Cerrar sesión
 
+### 🔐 Autenticación y Validaciones
+
+- Login con email y contraseña; opción "Recordarme"
+- Registro con los siguientes campos y validaciones:
+  - **Nombre** — obligatorio, máx. 255 caracteres
+  - **Email** — obligatorio, formato válido, único en la BD
+  - **Contraseña** — mínimo 8 caracteres, confirmación obligatoria
+  - **DNI** — opcional; formato `12345678A` (8 dígitos + letra mayúscula)
+  - **NIE** — opcional; formato `X1234567A` (X/Y/Z + 7 dígitos + letra mayúscula)
+  - **Teléfono** — opcional; 9 dígitos empezando por 6, 7, 8 o 9 (se guarda con prefijo `+34`)
+  - **Fecha de nacimiento** — opcional; no puede ser futura ni hace más de 120 años
+  - **Alergias / Condiciones médicas** — opcionales, texto libre
+- Todos los mensajes de error están en español
+- Redirección por rol tras autenticarse: `empleado` → `/admin`, `cliente` → `/`
+
 ### 🧾 Historial del Paciente
 - Sistema de notas por paciente
 - Registro de tratamientos y observaciones

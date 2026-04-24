@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PuraSonrisa — Crear cuenta</title>
 
+    <!-- Icono de la pestaña -->
+    <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" type="image/webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -126,7 +128,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('registro') }}">
+            <form method="POST" action="{{ route('registro.submit') }}">
                 @csrf
 
                 <!-- Seccion: datos personales -->
@@ -153,7 +155,8 @@
                     <div class="relative group">
                         <i class="bi bi-card-text absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-base pointer-events-none transition-colors duration-300 group-focus-within:text-[#08beff]"></i>
                         <input type="text" name="dni" placeholder="DNI / NIE"
-                               value="{{ old('dni') }}" autocomplete="off"
+                               value="{{ old('dni') }}" autocomplete="off" maxlength="9"
+                               style="text-transform:uppercase"
                                class="w-full bg-white/5 border border-white/[0.07] rounded-xl
                                       py-[0.9rem] pl-12 pr-4 text-[0.9rem] text-white
                                       placeholder:text-white/25 outline-none
@@ -165,7 +168,7 @@
                     <div class="relative group">
                         <i class="bi bi-telephone absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-base pointer-events-none transition-colors duration-300 group-focus-within:text-[#08beff]"></i>
                         <input type="tel" name="telefono" placeholder="Teléfono"
-                               value="{{ old('telefono') }}" autocomplete="tel"
+                               value="{{ old('telefono') }}" autocomplete="tel" maxlength="9"
                                class="w-full bg-white/5 border border-white/[0.07] rounded-xl
                                       py-[0.9rem] pl-12 pr-4 text-[0.9rem] text-white
                                       placeholder:text-white/25 outline-none
@@ -179,6 +182,8 @@
                     <i class="bi bi-calendar3 absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-base pointer-events-none transition-colors duration-300 group-focus-within:text-[#08beff]"></i>
                     <input type="date" name="fecha_nacimiento"
                            value="{{ old('fecha_nacimiento') }}"
+                           min="{{ now()->subYears(120)->toDateString() }}"
+                           max="{{ now()->toDateString() }}"
                            class="w-full bg-white/5 border border-white/[0.07] rounded-xl
                                   py-[0.9rem] pl-12 pr-4 text-[0.9rem] text-white/70
                                   outline-none
