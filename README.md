@@ -94,6 +94,14 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 - Sistema de notas por paciente
 - Registro de tratamientos y observaciones
 
+> ⚠️ **Consideraciones técnicas del historial**
+>
+> **Almacenamiento de fotos**
+> Las imágenes adjuntas a las notas **no usan `Storage` de Laravel**. Se guardan directamente en `public/imagenes/historial/{id_nota}/` y se sirven con `asset()`. Esto es intencionado porque Apache en XAMPP Windows no sirve ficheros a través del symlink/junction que crea `php artisan storage:link`.
+>
+> **`migrate:fresh` y datos del historial**
+> Ejecutar `migrate:fresh` borra todas las tablas, incluidas `historial_clinico` e `imagenes_clinicas`. Los ficheros físicos en `public/imagenes/historial/` quedan huérfanos (sin registro en BD). En **desarrollo** no es problema: se pierden datos de prueba como con cualquier otra tabla. En **producción** nunca se usa `migrate:fresh`; solo `migrate` para aplicar cambios incrementales sin borrar datos.
+
 ### 🤖 Chatbot (Simulación)
 - Respuestas automáticas a preguntas frecuentes
 - Soporte básico inicial

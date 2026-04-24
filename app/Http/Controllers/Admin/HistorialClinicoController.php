@@ -37,10 +37,15 @@ class HistorialClinicoController extends Controller
 
         if ($request->hasFile('fotos')) {
             foreach ($request->file('fotos') as $file) {
-                $ruta = $file->store("historial/{$nota->id}", 'public');
+                $carpeta = public_path("imagenes/historial/{$nota->id}");
+                if (! is_dir($carpeta)) {
+                    mkdir($carpeta, 0755, true);
+                }
+                $nombre = uniqid('foto_', true) . '.' . $file->getClientOriginalExtension();
+                $file->move($carpeta, $nombre);
                 $nota->imagenes()->create([
                     'nombre'      => $file->getClientOriginalName(),
-                    'ruta'        => $ruta,
+                    'ruta'        => "imagenes/historial/{$nota->id}/{$nombre}",
                     'tipo'        => 'foto',
                     'descripcion' => null,
                 ]);

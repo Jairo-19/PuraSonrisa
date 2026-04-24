@@ -45,12 +45,21 @@
         to   { opacity: 1; transform: translateY(0); }
     }
     .nota-anim { animation: slideIn .35s ease-out both; }
+    .nota-anim:nth-child(2)  { animation-delay: .05s; }
+    .nota-anim:nth-child(3)  { animation-delay: .10s; }
+    .nota-anim:nth-child(4)  { animation-delay: .15s; }
+    .nota-anim:nth-child(5)  { animation-delay: .20s; }
+    .nota-anim:nth-child(6)  { animation-delay: .25s; }
+    .nota-anim:nth-child(7)  { animation-delay: .30s; }
+    .nota-anim:nth-child(8)  { animation-delay: .35s; }
+    .nota-anim:nth-child(9)  { animation-delay: .40s; }
+    .nota-anim:nth-child(10) { animation-delay: .45s; }
 </style>
 @endpush
 
 @section('content')
 
-{{-- ── Flash ──────────────────────────────────────────────── --}}
+<!-- ── Flash ──────────────────────────────────────────────── -->
 @if(session('flash_success'))
 <div id="flash-msg"
      class="flex items-center gap-3 mb-6 px-5 py-[.85rem] bg-[rgba(8,190,255,.08)] border border-[rgba(8,190,255,.2)] rounded-xl text-[.84rem] text-[#08beff] anim-up">
@@ -59,10 +68,10 @@
 </div>
 @endif
 
-{{-- ── Ficha del paciente ─────────────────────────────────── --}}
+<!-- ── Ficha del paciente ─────────────────────────────────── -->
 <div class="anim-up bg-[rgba(255,255,255,.03)] border border-[rgba(255,255,255,.07)] rounded-2xl p-6 mb-8">
 
-    {{-- Cabecera con nombre prominente --}}
+    <!-- Cabecera con nombre prominente -->
     <div class="flex items-center gap-4 mb-6 pb-5 border-b border-[rgba(255,255,255,.07)]">
         <div class="w-14 h-14 rounded-full shrink-0 flex items-center justify-center text-[1.15rem] font-bold text-white"
              style="background: linear-gradient(135deg, #cc0247, #08beff);">
@@ -96,10 +105,10 @@
         </div>
     </div>
 
-    {{-- Datos médicos clave --}}
+    <!-- Datos médicos clave -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        {{-- Alergias --}}
+        <!-- Alergias -->
         <div class="bg-[rgba(204,2,71,.06)] border border-[rgba(204,2,71,.15)] rounded-xl p-4">
             <div class="flex items-center gap-2 mb-2">
                 <i class="bi bi-exclamation-triangle-fill text-[#cc0247] text-[.9rem]"></i>
@@ -112,7 +121,7 @@
             @endif
         </div>
 
-        {{-- Condición médica --}}
+        <!-- Condición médica -->
         <div class="bg-[rgba(8,190,255,.06)] border border-[rgba(8,190,255,.15)] rounded-xl p-4">
             <div class="flex items-center gap-2 mb-2">
                 <i class="bi bi-heart-pulse-fill text-[#08beff] text-[.9rem]"></i>
@@ -128,10 +137,10 @@
     </div>
 </div>
 
-{{-- ── Zona principal: notas + formulario ───────────────────── --}}
+<!-- ── Zona principal: notas + formulario ───────────────────── -->
 <div class="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 items-start">
 
-    {{-- Lista de notas --}}
+    <!-- Lista de notas -->
     <div>
         <div class="flex items-center justify-between mb-4">
             <h3 class="font-['Cormorant_Garamond'] text-[1.3rem] font-bold text-white leading-none">
@@ -151,7 +160,7 @@
         @else
             <div class="flex flex-col gap-3">
                 @foreach($historial as $i => $nota)
-                <div class="nota-card nota-anim" style="animation-delay: {{ $i * 0.05 }}s">
+                <div class="nota-card nota-anim">
                     <div class="flex items-start justify-between gap-4 mb-3">
                         <span class="inline-flex items-center gap-2 text-[.73rem] font-semibold text-[rgba(0,0,0,.45)]">
                             <i class="bi bi-calendar3"></i>
@@ -172,14 +181,14 @@
                     </div>
                     <p class="text-[.88rem] leading-[1.7] text-[#1a1a1a] m-0 whitespace-pre-wrap">{{ $nota->descripcion }}</p>
 
-                    {{-- Imágenes adjuntas --}}
+                    <!-- Imágenes adjuntas -->
                     @if($nota->imagenes->isNotEmpty())
                     <div class="nota-linea"></div>
                     <div class="flex flex-wrap gap-2 mt-3">
                         @foreach($nota->imagenes as $img)
-                        <a href="{{ Storage::url($img->ruta) }}" target="_blank" rel="noopener"
+                        <a href="{{ asset($img->ruta) }}" target="_blank" rel="noopener"
                            class="group relative w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-[#08beff] transition-all shrink-0">
-                            <img src="{{ Storage::url($img->ruta) }}" alt="{{ $img->nombre }}"
+                            <img src="{{ asset($img->ruta) }}" alt="{{ $img->nombre }}"
                                  class="w-full h-full object-cover">
                             <span class="absolute inset-0 bg-[rgba(0,0,0,.45)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                 <i class="bi bi-arrows-fullscreen text-white text-sm"></i>
@@ -196,7 +205,7 @@
         @endif
     </div>
 
-    {{-- Formulario nueva nota --}}
+    <!-- Formulario nueva nota -->
     <div class="sticky top-[88px]">
         <div class="bg-[rgba(255,255,255,.03)] border border-[rgba(255,255,255,.07)] rounded-2xl p-5">
             <h3 class="font-['Cormorant_Garamond'] text-[1.2rem] font-bold text-white mb-4 leading-none">
@@ -219,7 +228,7 @@
                     <p class="text-[.76rem] text-[#ff6b8a] mt-1 mb-0">{{ $message }}</p>
                 @enderror
 
-                {{-- Adjuntar fotos --}}
+                <!-- Adjuntar fotos -->
                 <div class="mt-3">
                     <label for="fotos"
                            class="flex items-center gap-2 w-full px-4 py-[.7rem] bg-[rgba(255,255,255,.03)] border border-dashed {{ $errors->has('fotos') || $errors->has('fotos.*') ? 'border-[#cc0247]' : 'border-[rgba(255,255,255,.12)]' }} rounded-xl cursor-pointer transition-colors hover:border-[#08beff] hover:bg-[rgba(8,190,255,.03)]">
