@@ -24,3 +24,6 @@ Route::view('/login/cargando', 'login.loading')->name('login.loading');
 
 // La pantalla de carga redirige aqui tras la animacion
 Route::view('/login', 'login.index')->name('login');
+
+// Ruta del registro de nuevos usuarios
+Route::view('/registro', 'login.registro')->name('registro');

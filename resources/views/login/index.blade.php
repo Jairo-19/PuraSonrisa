@@ -7,7 +7,6 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -73,7 +72,7 @@
             <h2>¿Nuevo<br>por aquí?</h2>
             <p>Regístrate y accede a tu historial, citas y mucho más desde un solo lugar.</p>
             <!-- Enlace al registro (próximo paso) -->
-            <a href="#" class="btn-registro">Crear cuenta</a>
+            <a href="{{ route('registro') }}" class="btn-registro">Crear cuenta</a>
         </div>
     </div>
 
