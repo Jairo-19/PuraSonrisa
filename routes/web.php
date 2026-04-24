@@ -48,5 +48,9 @@ Route::post('/logout', function () {
 // Panel de administración — solo accesible para empleados autenticados
 Route::middleware(['auth', 'empleado'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', fn() => redirect()->route('admin.usuarios'))->name('index');
-    Route::get('/usuarios', [AdminController::class, 'usuarios'])->name('usuarios');
+    Route::get('/usuarios',                  [AdminController::class, 'usuarios'])->name('usuarios');
+    Route::get('/usuarios/crear',            [AdminController::class, 'crear'])->name('usuarios.crear');
+    Route::post('/usuarios',                 [AdminController::class, 'store'])->name('usuarios.store');
+    Route::get('/usuarios/{usuario}/editar', [AdminController::class, 'editar'])->name('usuarios.editar');
+    Route::put('/usuarios/{usuario}',        [AdminController::class, 'update'])->name('usuarios.update');
 });
