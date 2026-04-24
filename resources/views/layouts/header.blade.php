@@ -45,16 +45,65 @@
                     Contacto
                 </a>
             </li>
-            <li>
-                <a href="#"
-                   class="flex items-center justify-center w-9 h-9 rounded-full border-2 border-gray-300 text-gray-600
-                          hover:border-[#cc0247] hover:text-[#cc0247] transition-all duration-300">
-                    <i class="bi bi-person text-lg"></i>
-                </a>
+            <!-- Icono de usuario: desplegable si está autenticado, redirige al login si no lo está -->
+            <li class="relative" id="user-menu-wrap">
+
+                @auth
+                    {{-- Usuario autenticado: botón que abre/cierra el desplegable --}}
+                    <button id="user-menu-btn"
+                            class="flex items-center justify-center w-9 h-9 rounded-full border-2 border-[#cc0247] text-[#cc0247] transition-all duration-300"
+                            aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-person-fill text-lg"></i>
+                    </button>
+
+                    {{-- Desplegable --}}
+                    <div id="user-dropdown"
+                         class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+
+                        {{-- Nombre del usuario --}}
+                        <div class="px-4 py-2 border-b border-gray-100">
+                            <p class="text-xs text-gray-400 uppercase tracking-widest">Cuenta</p>
+                            <p class="text-sm font-semibold text-gray-700 truncate">{{ auth()->user()->nombre ?? auth()->user()->email }}</p>
+                        </div>
+
+                        {{-- Cerrar sesión (sin funcionalidad por ahora) --}}
+                        <button class="w-full text-left px-4 py-2 text-sm text-[#cc0247] font-semibold
+                                       hover:bg-red-50 transition-colors duration-200 flex items-center gap-2 mt-1">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                @else
+                    {{-- Usuario no autenticado: lleva a la pantalla de carga antes del login --}}
+                    <a href="{{ route('login.loading') }}"
+                       class="flex items-center justify-center w-9 h-9 rounded-full border-2 border-gray-300 text-gray-600
+                              hover:border-[#cc0247] hover:text-[#cc0247] transition-all duration-300">
+                        <i class="bi bi-person text-lg"></i>
+                    </a>
+                @endauth
             </li>
         </ul>
     </nav>
 
-
-    
 </header>
+
+@auth
+<script>
+    // Abrir/cerrar el desplegable de usuario
+    const btn = document.getElementById('user-menu-btn');
+    const dropdown = document.getElementById('user-dropdown');
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = !dropdown.classList.contains('hidden');
+        dropdown.classList.toggle('hidden', isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', function () {
+        dropdown.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+    });
+</script>
+@endauth
