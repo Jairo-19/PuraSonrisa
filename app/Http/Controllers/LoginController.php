@@ -34,7 +34,7 @@ class LoginController extends Controller
 
             /* Redirigir según el rol del usuario autenticado */
             if (Auth::user()->rol === 'empleado') {
-                return redirect()->route('admin');
+                return redirect()->route('login.loading', ['next' => 'admin']);
             }
 
             return redirect()->route('home');

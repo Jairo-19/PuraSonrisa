@@ -81,16 +81,26 @@
     </div>
 
     <!-- Texto -->
-    <p class="fade-in text-sm font-semibold tracking-widest uppercase text-gray-400"
+    <p id="loading-txt" class="fade-in text-sm font-semibold tracking-widest uppercase text-gray-400"
        style="font-family: 'Open Sans', sans-serif; animation-delay: 0.5s;">
         Preparando tu acceso…
     </p>
 
-    <!-- Redirigir según ?next: 'home' → inicio, cualquier otro → login -->
+    <!-- Redirigir según ?next: 'home' → inicio, 'admin' → panel, cualquier otro → login -->
     <script>
-        const allowed = { home: "{{ route('home') }}", login: "{{ route('login') }}" };
+        const allowed = {
+            home:  "{{ route('home') }}",
+            login: "{{ route('login') }}",
+            admin: "{{ route('admin.usuarios') }}"
+        };
         const next    = new URLSearchParams(window.location.search).get('next');
         const destino = allowed[next] ?? allowed.login;
+
+        if (next === 'admin') {
+            const txt = document.getElementById('loading-txt');
+            if (txt) txt.textContent = 'Abriendo el panel…';
+        }
+
         setTimeout(function () {
             window.location.href = destino;
         }, 3000);

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\Admin\AdminController;
 
 //Aqui defino la ruta para la pagina de inicio
 Route::get('/', HomeController::class)->name('home');
@@ -45,4 +46,7 @@ Route::post('/logout', function () {
 })->name('logout');
 
 // Panel de administración — solo accesible para empleados autenticados
-Route::view('/admin', 'admin.index')->name('admin');
+Route::middleware(['auth', 'empleado'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', fn() => redirect()->route('admin.usuarios'))->name('index');
+    Route::get('/usuarios', [AdminController::class, 'usuarios'])->name('usuarios');
+});
