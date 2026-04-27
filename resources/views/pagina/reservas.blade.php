@@ -329,10 +329,19 @@
 
 </div>
 
+<!-- Datos de configuración para JS -->
+<div id="app-config"
+     data-auth="{{ auth()->check() ? '1' : '0' }}"
+     data-login-url="{{ route('login.loading') }}"
+     class="hidden"></div>
+
 @endsection
 
 @push('scripts')
 <script>
+    const _cfg      = document.getElementById('app-config').dataset;
+    const AUTH_USER = _cfg.auth === '1';
+    const LOGIN_URL = _cfg.loginUrl;
     /* ═══════════════════════════════════════════════════
        ESTADO GLOBAL
     ═══════════════════════════════════════════════════ */
@@ -440,11 +449,12 @@
             const fechaStr = `${calAno}-${String(calMes+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
             btn.dataset.fecha = fechaStr;
 
-            const esHoy     = fecha.getTime() === hoy.getTime();
-            const esPasado  = fecha < hoy;
+            const esHoy       = fecha.getTime() === hoy.getTime();
+            const esPasado    = fecha < hoy;
+            const esFinde     = fecha.getDay() === 0 || fecha.getDay() === 6;
             const seleccionado = reserva.fecha === fechaStr;
 
-            if (esPasado) {
+            if (esPasado || esFinde) {
                 btn.className = 'cal-dia w-9 h-9 rounded-full text-xs text-gray-300 cursor-not-allowed flex items-center justify-center';
                 btn.disabled  = true;
             } else if (seleccionado) {
@@ -579,6 +589,12 @@
        PASO 3 — RESUMEN
     ═══════════════════════════════════════════════════ */
     function rellenarPaso3() {
+        if (!AUTH_USER) {
+            // Guardar intención en sessionStorage para retomar tras login
+            sessionStorage.setItem('reserva_pendiente', JSON.stringify(reserva));
+            window.location.href = LOGIN_URL;
+            return;
+        }
         const [a, m, d] = reserva.fecha.split('-');
         const fechaLeg  = `${parseInt(d)} de ${MESES[parseInt(m)-1].toLowerCase()} de ${a}`;
 

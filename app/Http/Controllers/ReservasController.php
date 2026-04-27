@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 
 class ReservasController extends Controller
 {
-    // Horario de la clínica: 9:00 → 20:00 en franjas de 30 min
-    private const HORA_INICIO = '09:00';
-    private const HORA_FIN    = '20:00';
-    private const DURACION    = 30; // minutos por franja
+    // Horario de la clínica: mañana 9:00→14:00, tarde 16:00→20:00
+    private const FRANJAS = [
+        ['inicio' => '09:00', 'fin' => '14:00'],
+        ['inicio' => '16:00', 'fin' => '20:00'],
+    ];
 
     public function index()
     {
@@ -39,35 +40,37 @@ class ReservasController extends Controller
     }
 
     /**
-     * Genera todas las franjas del día e indica disponibilidad.
+     * Genera todas las franjas del día respetando el horario partido e indica disponibilidad.
      */
     private function generarSlots(string $fecha, int $duracion): array
     {
         $totalConsultas = Consulta::activas()->count();
         $slots = [];
 
-        $cursor = strtotime(self::HORA_INICIO);
-        $limite = strtotime(self::HORA_FIN);
+        foreach (self::FRANJAS as $franja) {
+            $cursor = strtotime($franja['inicio']);
+            $limite = strtotime($franja['fin']);
 
-        while (($cursor + $duracion * 60) <= $limite) {
-            $horaInicio = date('H:i', $cursor);
-            $horaFin    = date('H:i', $cursor + $duracion * 60);
+            while (($cursor + $duracion * 60) <= $limite) {
+                $horaInicio = date('H:i', $cursor);
+                $horaFin    = date('H:i', $cursor + $duracion * 60);
 
-            // Consultas ocupadas en este slot (alguna cita solapa)
-            $consultasOcupadas = Cita::where('fecha', $fecha)
-                ->where('hora_inicio', '<', $horaFin)
-                ->where('hora_fin',    '>', $horaInicio)
-                ->whereNotNull('consulta_id')
-                ->distinct('consulta_id')
-                ->count('consulta_id');
+                // Consultas ocupadas en este slot (alguna cita solapa)
+                $consultasOcupadas = Cita::where('fecha', $fecha)
+                    ->where('hora_inicio', '<', $horaFin)
+                    ->where('hora_fin',    '>', $horaInicio)
+                    ->whereNotNull('consulta_id')
+                    ->distinct('consulta_id')
+                    ->count('consulta_id');
 
-            $slots[] = [
-                'hora_inicio'  => $horaInicio,
-                'hora_fin'     => $horaFin,
-                'disponible'   => $consultasOcupadas < $totalConsultas,
-            ];
+                $slots[] = [
+                    'hora_inicio'  => $horaInicio,
+                    'hora_fin'     => $horaFin,
+                    'disponible'   => $consultasOcupadas < $totalConsultas,
+                ];
 
-            $cursor += $duracion * 60;
+                $cursor += $duracion * 60;
+            }
         }
 
         return $slots;
