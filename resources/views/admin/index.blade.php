@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PuraSonrisa — Panel</title>
 
-    <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" type="image/webp">
+    <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisaBlanco.webp') }}" type="image/webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     <style>
         /* No reemplazables con Tailwind */
@@ -38,7 +41,7 @@
 
     <!-- Logo -->
     <div class="flex items-center gap-[.85rem] px-6 py-[1.6rem] border-b border-[rgba(255,255,255,.07)]">
-        <img src="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" alt="Logo" class="w-9 logo-img">
+        <img src="{{ asset('imagenes/LogoPuraSonrisaBlanco.webp') }}" alt="Logo" class="w-9 logo-img">
         <span class="font-['Cormorant_Garamond'] text-[1.35rem] font-bold text-white tracking-[.01em]">PuraSonrisa</span>
     </div>
 

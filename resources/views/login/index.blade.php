@@ -6,7 +6,7 @@
     <title>PuraSonrisa — Iniciar sesión</title>
 
     <!-- Icono de la pestaña -->
-    <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" type="image/webp">
+    <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisaBlanco.webp') }}" type="image/webp">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">

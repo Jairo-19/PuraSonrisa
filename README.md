@@ -75,13 +75,12 @@ El sistema permite que varios pacientes tengan cita a la **misma hora** siempre 
 | Tabla | Rol |
 |---|---|
 | `consultas` | Gabinetes físicos de la clínica (`nombre`, `color` hex, `activa`) |
-| `citas` | Cada cita lleva `consulta_id` (asignado automáticamente) y `empleado_id` (asignado por el admin al confirmar) |
+| `citas` | Cada cita lleva `consulta_id` (asignado automáticamente) y `empleado_id` (asignado automáticamente al crear la cita) |
 
 **Flujo de una reserva (Paso 1 → 3):**
 1. El paciente elige el servicio
 2. Elige fecha y franja horaria — solo se muestran franjas donde haya al menos una consulta libre
-3. Confirma — el sistema asigna automáticamente la primera consulta libre en ese slot y crea la cita con `estado = 'pendiente'` y `empleado_id = null`
-4. Un empleado desde el panel admin ve la cita pendiente y se la asigna (pasa a `confirmada`)
+3. Confirma — el sistema asigna automáticamente la primera consulta libre en ese slot y el primer empleado disponible, y crea la cita con `estado = 'confirmada'` directamente
 
 **Detección de solapamiento:**
 ```sql

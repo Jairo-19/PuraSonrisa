@@ -8,7 +8,7 @@
         <div class="flex flex-col items-start gap-6">
             <!-- Logo de la clínica -->
             <a href="{{ route('home') }}">
-                <img src="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" alt="Logo PuraSonrisa" class="h-12 w-auto brightness-0 invert">
+                <img src="{{ asset('imagenes/LogoPuraSonrisaBlanco.webp') }}" alt="Logo PuraSonrisa" class="h-12 w-auto brightness-0 invert">
             </a>
             <p class="text-sm text-gray-400 leading-relaxed">
                 Cuidando tu sonrisa con dedicación y los mejores profesionales desde 1999.
