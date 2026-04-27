@@ -39,7 +39,7 @@
         @else
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-xl font-bold text-gray-800">
-                    {{ $citas->count() }} {{ $citas->count() === 1 ? 'cita' : 'citas' }}
+                    {{ $total }} {{ $total === 1 ? 'cita' : 'citas' }}
                 </h2>
                 <a href="{{ route('reservas') }}"
                    class="inline-flex items-center gap-2 px-4 py-2 bg-[#cc0247] hover:bg-[#a8013b] text-white text-xs font-bold rounded-xl transition-all shadow-[0_4px_14px_rgba(204,2,71,.3)]">

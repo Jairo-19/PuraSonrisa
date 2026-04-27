@@ -288,7 +288,7 @@
     @endforeach
     <span class="flex items-center gap-1.5 text-[.73rem] text-[rgba(255,255,255,.5)]">
         <span class="w-[26px] h-[26px] rounded-full inline-flex items-center justify-center
-                     text-[.7rem] font-bold bg-[#cc0247] text-white">27</span>
+                     text-[.7rem] font-bold bg-[#cc0247] text-white">{{ now()->day }}</span>
         Hoy
     </span>
 </div>

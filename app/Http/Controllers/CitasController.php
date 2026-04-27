@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use App\Models\Consulta;
 use App\Models\Servicio;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,9 +35,15 @@ class CitasController extends Controller
             return back()->with('error', 'Lo sentimos, ese horario ya no está disponible. Por favor elige otro.');
         }
 
+        $empleadoId = $this->empleadoLibre(
+            $request->fecha,
+            $request->hora_inicio,
+            $request->hora_fin
+        );
+
         Cita::create([
             'paciente_id'  => Auth::id(),
-            'empleado_id'  => null,          // el admin lo asigna al confirmar
+            'empleado_id'  => $empleadoId,
             'servicio_id'  => $request->servicio_id,
             'consulta_id'  => $consultaId,
             'fecha'        => $request->fecha,
@@ -70,5 +77,44 @@ class CitasController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * Devuelve el id del empleado con menos citas ese día que no tenga solapamiento.
+     * Retorna null si no hay ninguno disponible.
+     */
+    private function empleadoLibre(string $fecha, string $horaInicio, string $horaFin): ?int
+    {
+        $empleados = Usuario::empleados()->get();
+
+        // Cargar citas del día para todos los empleados en una sola query
+        $citasDelDia = Cita::whereIn('empleado_id', $empleados->pluck('id'))
+            ->where('fecha', $fecha)
+            ->get()
+            ->groupBy('empleado_id');
+
+        $mejorEmpleado = null;
+        $menosCitas    = PHP_INT_MAX;
+
+        foreach ($empleados as $empleado) {
+            $citasEmpleado = $citasDelDia->get($empleado->id, collect());
+
+            // Comprobar solapamiento
+            $solapada = $citasEmpleado->contains(function ($cita) use ($horaInicio, $horaFin) {
+                return $cita->hora_inicio < $horaFin && $cita->hora_fin > $horaInicio;
+            });
+
+            if ($solapada) {
+                continue;
+            }
+
+            $total = $citasEmpleado->count();
+            if ($total < $menosCitas) {
+                $menosCitas    = $total;
+                $mejorEmpleado = $empleado->id;
+            }
+        }
+
+        return $mejorEmpleado;
     }
 }

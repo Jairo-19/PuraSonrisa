@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Auth;
 
 class ClienteController extends Controller
@@ -9,6 +10,7 @@ class ClienteController extends Controller
     /** Vista de perfil del cliente autenticado */
     public function perfil()
     {
+        /** @var Usuario $usuario */
         $usuario = Auth::user();
         return view('cliente.perfil', compact('usuario'));
     }
@@ -16,13 +18,16 @@ class ClienteController extends Controller
     /** Lista de citas del cliente autenticado */
     public function misCitas()
     {
-        $citas = Auth::user()
-            ->citasPaciente()
+        /** @var Usuario $user */
+        $user  = Auth::user();
+        $citas = $user->citasPaciente()
             ->with(['servicio', 'empleado'])
             ->orderByDesc('fecha')
             ->orderByDesc('hora_inicio')
             ->get();
 
-        return view('cliente.mis-citas', compact('citas'));
+        $total = $citas->count();
+
+        return view('cliente.mis-citas', compact('citas', 'total'));
     }
 }
