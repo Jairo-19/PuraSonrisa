@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\HistorialClinicoController;
 
 use App\Http\Controllers\CitasController;
@@ -73,6 +74,10 @@ Route::middleware(['auth', 'empleado'])->prefix('admin')->name('admin.')->group(
     Route::post('/usuarios',                 [AdminController::class, 'store'])->name('usuarios.store');
     Route::get('/usuarios/{usuario}/editar', [AdminController::class, 'editar'])->name('usuarios.editar');
     Route::put('/usuarios/{usuario}',        [AdminController::class, 'update'])->name('usuarios.update');
+
+    // Agenda / Calendario
+    Route::get('/agenda',     [AgendaController::class, 'dia'])->name('agenda');
+    Route::get('/agenda/mes', [AgendaController::class, 'mes'])->name('agenda.mes');
 
     // Historial clínico por paciente
     Route::get('/pacientes/{usuario}/historial',  [HistorialClinicoController::class, 'show'])->name('historial.show');

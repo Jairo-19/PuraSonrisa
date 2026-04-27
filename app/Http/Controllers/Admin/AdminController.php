@@ -19,7 +19,6 @@ class AdminController extends Controller
         $usuarios = Usuario::orderBy('nombre')->get();
 
         return view('admin.index', [
-            'seccion'  => 'usuarios',
             'usuarios' => $usuarios,
         ]);
     }

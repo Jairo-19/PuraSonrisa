@@ -16,10 +16,25 @@
 
     <style>
         /* No reemplazables con Tailwind */
-        body { font-family: 'DM Sans', sans-serif; }
+        body { font-family: 'DM Sans', sans-serif; color-scheme: dark; }
 
         .logo-img    { filter: drop-shadow(0 0 10px rgba(8,190,255,.35)); }
         .avatar-grad { background: linear-gradient(135deg, #cc0247, #08beff); }
+
+        /* Selects nativos: fondo oscuro + texto legible dentro del popup */
+        select {
+            color-scheme: dark;
+            background-color: #12121f;
+            color: #fff;
+        }
+        select option {
+            background-color: #12121f;
+            color: #fff;
+        }
+        select option:checked,
+        select option:hover {
+            background-color: #1e1e30;
+        }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(16px); }
@@ -52,7 +67,14 @@
             Usuarios
         </a>
 
-        @foreach([['bi-calendar-check','Citas'],['bi-folder2-open','Historiales'],['bi-scissors','Servicios']] as [$ico,$lbl])
+        <a href="{{ route('admin.agenda') }}"
+           class="flex items-center gap-3 px-[.85rem] py-[.65rem] rounded-[10px] text-[.84rem] font-medium no-underline transition-all cursor-pointer mb-[.15rem]
+                  {{ request()->routeIs('admin.agenda*') ? 'bg-[rgba(8,190,255,.1)] text-[#08beff]' : 'text-[rgba(255,255,255,.32)] hover:bg-[rgba(255,255,255,.05)] hover:text-[rgba(255,255,255,.75)]' }}">
+            <i class="bi bi-calendar-check text-base shrink-0"></i>
+            Agenda
+        </a>
+
+        @foreach([['bi-folder2-open','Historiales'],['bi-scissors','Servicios']] as [$ico,$lbl])
         <span class="flex items-center gap-3 px-[.85rem] py-[.65rem] rounded-[10px] text-[.84rem] font-medium text-[rgba(255,255,255,.32)] mb-[.15rem] opacity-35 pointer-events-none">
             <i class="bi {{ $ico }} text-base shrink-0"></i> {{ $lbl }}
         </span>
