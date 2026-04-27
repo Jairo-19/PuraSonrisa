@@ -3,7 +3,7 @@
 
     <!-- Logo: enlaza a la página de inicio -->
     <a href="{{ route('home') }}">
-        <img src="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" alt="Logo de PuraSonrisa" class="h-12 w-auto">
+        <img src="{{ asset('imagenes/LogoPuraSonrisaNegro.webp') }}" alt="Logo de PuraSonrisa" class="h-12 w-auto">
     </a>
 
     <!-- Navegación principal: efecto hover con línea rosa que se expande bajo el enlace -->
@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="{{ route('reservas') }}"
                    class="relative text-sm font-semibold text-gray-700 pb-1
                           after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0
                           after:bg-[#cc0247] after:transition-all after:duration-300
@@ -65,6 +65,22 @@
                             <p class="text-xs text-gray-400 uppercase tracking-widest">Cuenta</p>
                             <p class="text-sm font-semibold text-gray-700 truncate">{{ auth()->user()->nombre ?? auth()->user()->email }}</p>
                         </div>
+
+                        <!-- Perfil -->
+                        <a href="{{ route('perfil') }}"
+                           class="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 font-medium
+                                  hover:bg-[#fffbf4] hover:text-[#cc0247] transition-colors duration-200 mt-1">
+                            <i class="bi bi-person text-base"></i>
+                            Perfil
+                        </a>
+
+                        <!-- Mis citas -->
+                        <a href="{{ route('mis-citas') }}"
+                           class="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 font-medium
+                                  hover:bg-[#fffbf4] hover:text-[#cc0247] transition-colors duration-200">
+                            <i class="bi bi-calendar2-check text-base"></i>
+                            Mis citas
+                        </a>
 
                         <!-- Cerrar sesión -->
                         <form method="POST" action="{{ route('logout') }}">

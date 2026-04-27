@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         // Servicios reales
         $this->call(ServiciosSeeder::class);
 
+        // Consultas (gabinetes físicos de la clínica)
+        $this->call(ConsultasSeeder::class);
+
         // 2 empleados
         Usuario::factory()->empleado()->count(2)->create();
 

@@ -13,7 +13,7 @@
     </style>
 
     <!-- Icono de la pestaña -->
-     <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisa.webp') }}" type="image/webp">
+     <link rel="icon" href="{{ asset('imagenes/LogoPuraSonrisaBlanco.webp') }}" type="image/webp">
 
     <!-- Esto es para incluir los archivos de Vite y equivale al enlac e de tailwind -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -32,5 +32,7 @@
 
    @include('layouts.footer')
 
+    @stack('scripts')
+    @stack('scripts')
 </body>
 </html>

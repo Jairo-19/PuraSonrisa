@@ -5,8 +5,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HistorialClinicoController;
+
+use App\Http\Controllers\CitasController;
+use App\Http\Controllers\ClienteController;
 
 //Aqui defino la ruta para la pagina de inicio
 Route::get('/', HomeController::class)->name('home');
@@ -21,6 +25,21 @@ Route::get('/servicios', [ServiciosController::class, 'index'])->name('servicios
 //Aqui defino la ruta de contacto 
 //es una view porque no necesito un controlador para esta pagina, solo mostrar informacion de contacto
 Route::view('/contacto', 'pagina.contacto')->name('contacto');
+
+// Página de reservas
+Route::get('/reservas', [ReservasController::class, 'index'])->name('reservas');
+
+// AJAX: slots disponibles para una fecha y duración (accesible sin auth para poder ver disponibilidad)
+Route::get('/reservas/slots', [ReservasController::class, 'slots'])->name('reservas.slots');
+
+// Confirmar reserva — requiere estar autenticado como cliente
+Route::post('/reservas', [CitasController::class, 'store'])->middleware('auth')->name('citas.store');
+
+// Área de cliente
+Route::middleware('auth')->group(function () {
+    Route::get('/mi-perfil',  [ClienteController::class, 'perfil'])->name('perfil');
+    Route::get('/mis-citas',  [ClienteController::class, 'misCitas'])->name('mis-citas');
+});
 
 // Rutas de login
 // El usuario siempre entra primero por la pantalla de carga

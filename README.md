@@ -61,6 +61,34 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 - Creación manual desde panel admin
 - Envío automático de recordatorios por correo
 
+#### 📐 Lógica de reservas y consultas
+
+> ⚠️ **Supuesto de negocio**: la clínica dispone de **3 consultas físicas** (Rosa, Azul Claro, Azul Oscuro) y todos los **empleados son polivalentes** (cualquiera puede atender cualquier servicio).
+
+El sistema permite que varios pacientes tengan cita a la **misma hora** siempre que estén en **consultas distintas**. La disponibilidad de un slot horario se determina así:
+
+- Un slot (fecha + hora_inicio + hora_fin) está **disponible** si al menos una consulta no tiene ninguna cita que solape ese rango.
+- Un slot está **bloqueado** solo cuando todas las consultas activas están ocupadas simultáneamente.
+
+**Tablas implicadas:**
+
+| Tabla | Rol |
+|---|---|
+| `consultas` | Gabinetes físicos de la clínica (`nombre`, `color` hex, `activa`) |
+| `citas` | Cada cita lleva `consulta_id` (asignado automáticamente) y `empleado_id` (asignado por el admin al confirmar) |
+
+**Flujo de una reserva (Paso 1 → 3):**
+1. El paciente elige el servicio
+2. Elige fecha y franja horaria — solo se muestran franjas donde haya al menos una consulta libre
+3. Confirma — el sistema asigna automáticamente la primera consulta libre en ese slot y crea la cita con `estado = 'pendiente'` y `empleado_id = null`
+4. Un empleado desde el panel admin ve la cita pendiente y se la asigna (pasa a `confirmada`)
+
+**Detección de solapamiento:**
+```sql
+-- Cita B solapa con el slot solicitado si:
+hora_inicio_B < hora_fin_solicitada AND hora_fin_B > hora_inicio_solicitada
+```
+
 ### 👤 Sistema de Usuarios
 
 **Empleado**

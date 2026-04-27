@@ -14,6 +14,7 @@ class Cita extends Model
         'paciente_id',
         'empleado_id',
         'servicio_id',
+        'consulta_id',
         'fecha',
         'hora_inicio',
         'hora_fin',
@@ -44,6 +45,12 @@ class Cita extends Model
     public function servicio(): BelongsTo
     {
         return $this->belongsTo(Servicio::class, 'servicio_id');
+    }
+
+    /** Consulta (gabinete) donde se atiende la cita */
+    public function consulta(): BelongsTo
+    {
+        return $this->belongsTo(Consulta::class, 'consulta_id');
     }
 
     // ─── Scopes ────────────────────────────────────────────────
