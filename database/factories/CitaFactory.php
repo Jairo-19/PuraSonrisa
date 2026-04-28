@@ -26,18 +26,12 @@ class CitaFactory extends Factory
             'fecha'        => fake()->dateTimeBetween('now', '+3 months')->format('Y-m-d'),
             'hora_inicio'  => sprintf('%02d:00:00', $horaInicio),
             'hora_fin'     => sprintf('%02d:00:00', $horaInicio + 1),
-            'estado'       => fake()->randomElement(['pendiente', 'confirmada', 'completada']),
+            'estado'       => fake()->randomElement(['confirmada', 'completada']),
             'motivo'       => fake()->optional(0.6)->sentence(),
         ];
     }
 
     // ─── Estados ───────────────────────────────────────────────
-
-    // Estado: cita pendiente
-    public function pendiente(): static
-    {
-        return $this->state(['estado' => 'pendiente']);
-    }
 
     // Estado: cita confirmada
     public function confirmada(): static

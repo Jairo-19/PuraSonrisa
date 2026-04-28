@@ -21,12 +21,10 @@
         box-shadow: 0 16px 48px rgba(0,0,0,.12);
     }
     .cita-card.estado-confirmada { border-left-color: #08beff; }
-    .cita-card.estado-pendiente  { border-left-color: #f59e0b; }
     .cita-card.estado-completada { border-left-color: #10b981; }
 
     /* Badges de estado */
     .badge-confirmada { background: rgba(8,190,255,.12);  color: #0a6b8a; }
-    .badge-pendiente  { background: rgba(245,158,11,.12); color: #92400e; }
     .badge-completada { background: rgba(16,185,129,.12); color: #065f46; }
 
     /* Botón eliminar */
@@ -38,17 +36,11 @@
         color: #fff;
         transform: scale(1.03);
     }
-
-    /* Estadísticas */
-    .stat-pill {
-        background: rgba(255,255,255,.85);
-        backdrop-filter: blur(6px);
-    }
 </style>
 
-{{-- ═══════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════
      HERO
-═══════════════════════════════════════════════ --}}
+═══════════════════════════════════════════════ -->
 <section class="citas-hero relative flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 opacity-10"
          style="background-image: radial-gradient(circle at 30% 50%, #cc0247 0%, transparent 55%), radial-gradient(circle at 70% 50%, #08beff 0%, transparent 55%)"></div>
@@ -56,46 +48,16 @@
         <span class="block text-[#08beff] text-xs tracking-[0.4em] uppercase font-semibold mb-3">Mi cuenta</span>
         <h1 class="text-4xl font-bold text-white">Mis <span class="text-[#cc0247]">Citas</span></h1>
         <p class="mt-3 text-gray-400 text-sm">Consulta y gestiona todas tus citas programadas</p>
-
-        {{-- Píldoras de resumen --}}
-        @if($total > 0)
-        <div class="flex items-center justify-center gap-3 mt-5 flex-wrap">
-            <span class="stat-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 shadow-sm">
-                <i class="bi bi-calendar-check text-[#08beff]"></i>
-                {{ $total }} {{ $total === 1 ? 'cita' : 'citas' }} en total
-            </span>
-            @php
-                $confirmadas = $citas->where('estado','confirmada')->count();
-                $completadas = $citas->where('estado','completada')->count();
-                $pendientes  = $citas->where('estado','pendiente')->count();
-            @endphp
-            @if($confirmadas)
-            <span class="stat-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm" style="color:#0a6b8a">
-                <i class="bi bi-check2-circle text-[#08beff]"></i>{{ $confirmadas }} confirmada{{ $confirmadas > 1 ? 's' : '' }}
-            </span>
-            @endif
-            @if($pendientes)
-            <span class="stat-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm" style="color:#92400e">
-                <i class="bi bi-hourglass-split text-amber-400"></i>{{ $pendientes }} pendiente{{ $pendientes > 1 ? 's' : '' }}
-            </span>
-            @endif
-            @if($completadas)
-            <span class="stat-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm" style="color:#065f46">
-                <i class="bi bi-patch-check text-emerald-500"></i>{{ $completadas }} completada{{ $completadas > 1 ? 's' : '' }}
-            </span>
-            @endif
-        </div>
-        @endif
     </div>
 </section>
 
-{{-- ═══════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════
      CONTENIDO
-═══════════════════════════════════════════════ --}}
+═══════════════════════════════════════════════ -->
 <section class="min-h-screen py-14 px-4" style="background: linear-gradient(to bottom, #fffbf4, #e8e2d9);">
     <div class="max-w-3xl mx-auto">
 
-        {{-- Flash de éxito --}}
+        <!-- Flash de éxito -->
         @if(session('flash_success'))
         <div class="mb-6 flex items-center gap-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl px-5 py-4 text-sm font-medium shadow-sm">
             <i class="bi bi-check-circle-fill text-emerald-500 text-lg shrink-0"></i>
@@ -110,7 +72,7 @@
         </div>
         @endif
 
-        {{-- ── ESTADO VACÍO ── --}}
+        <!-- ── ESTADO VACÍO ── -->
         @if($citas->isEmpty())
         <div class="bg-white rounded-3xl shadow-[0_8px_40px_rgba(0,0,0,0.08)] px-8 py-16 text-center">
             <div class="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6"
@@ -128,32 +90,28 @@
             </a>
         </div>
 
-        {{-- ── LISTADO DE CITAS ── --}}
+        <!-- ── LISTADO DE CITAS ── -->
         @else
         <div class="space-y-4">
             @foreach($citas as $cita)
             @php
                 $estadoClass = match($cita->estado) {
                     'confirmada' => 'estado-confirmada',
-                    'pendiente'  => 'estado-pendiente',
                     'completada' => 'estado-completada',
                     default      => '',
                 };
                 $badgeClass = match($cita->estado) {
                     'confirmada' => 'badge-confirmada',
-                    'pendiente'  => 'badge-pendiente',
                     'completada' => 'badge-completada',
                     default      => 'bg-gray-100 text-gray-500',
                 };
                 $estadoIcon = match($cita->estado) {
                     'confirmada' => 'bi-check2-circle',
-                    'pendiente'  => 'bi-hourglass-split',
                     'completada' => 'bi-patch-check',
                     default      => 'bi-question-circle',
                 };
                 $estadoLabel = match($cita->estado) {
                     'confirmada' => 'Confirmada',
-                    'pendiente'  => 'Pendiente',
                     'completada' => 'Completada',
                     default      => ucfirst($cita->estado),
                 };
@@ -161,10 +119,10 @@
 
             <div class="cita-card {{ $estadoClass }} bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.07)] overflow-hidden">
 
-                {{-- Cabecera de la tarjeta --}}
+                <!-- Cabecera de la tarjeta -->
                 <div class="px-6 pt-5 pb-4 flex items-start justify-between gap-3 flex-wrap">
 
-                    {{-- Servicio --}}
+                    <!-- Servicio -->
                     <div class="flex items-center gap-3 min-w-0">
                         <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
                              style="background:linear-gradient(135deg,rgba(204,2,71,.1),rgba(204,2,71,.06))">
@@ -178,16 +136,16 @@
                         </div>
                     </div>
 
-                    {{-- Badge estado --}}
+                    <!-- Badge estado -->
                     <span class="{{ $badgeClass }} inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shrink-0">
                         <i class="bi {{ $estadoIcon }}"></i>{{ $estadoLabel }}
                     </span>
                 </div>
 
-                {{-- Datos de la cita --}}
+                <!-- Datos de la cita -->
                 <div class="px-6 pb-2 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
 
-                    {{-- Día --}}
+                    <!-- Día -->
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
                              style="background:rgba(8,190,255,.09)">
@@ -201,7 +159,7 @@
                         </div>
                     </div>
 
-                    {{-- Día de la semana --}}
+                    <!-- Día de la semana -->
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
                              style="background:rgba(8,190,255,.09)">
@@ -215,7 +173,7 @@
                         </div>
                     </div>
 
-                    {{-- Hora --}}
+                    <!-- Hora -->
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
                              style="background:rgba(8,190,255,.09)">
@@ -231,7 +189,7 @@
                         </div>
                     </div>
 
-                    {{-- Dentista --}}
+                    <!-- Dentista -->
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
                              style="background:rgba(8,190,255,.09)">
@@ -246,7 +204,7 @@
                     </div>
                 </div>
 
-                {{-- Motivo (si existe) --}}
+                <!-- Motivo (si existe) -->
                 @if($cita->motivo)
                 <div class="mx-6 mb-4 mt-2 flex items-start gap-2.5 bg-gray-50 rounded-xl px-4 py-3">
                     <i class="bi bi-chat-left-text text-gray-300 mt-0.5 shrink-0"></i>
@@ -254,7 +212,7 @@
                 </div>
                 @endif
 
-                {{-- Pie de tarjeta: botón eliminar --}}
+                <!-- Pie de tarjeta: botón eliminar -->
                 @if($cita->estado !== 'completada')
                 <div class="px-6 pb-5 pt-3 border-t border-gray-50 flex justify-end">
                     <form method="POST" action="{{ route('citas.destroy', $cita) }}"
@@ -279,7 +237,7 @@
             @endforeach
         </div>
 
-        {{-- Botón nueva cita --}}
+        <!-- Botón nueva cita -->
         <div class="mt-8 text-center">
             <a href="{{ route('reservas') }}"
                class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white text-sm font-semibold shadow-lg transition hover:scale-105"

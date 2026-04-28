@@ -22,6 +22,10 @@ class Cita extends Model
         'motivo',
     ];
 
+    // ─── Constantes de estado ──────────────────────────────────
+    const ESTADO_CONFIRMADA = 'confirmada';
+    const ESTADO_COMPLETADA = 'completada';
+
     // ─── Tipos ─────────────────────────────────────────────────
     protected $casts = [
         'fecha' => 'date',
@@ -54,12 +58,6 @@ class Cita extends Model
     }
 
     // ─── Scopes ────────────────────────────────────────────────
-
-    /// Scope para filtrar solo las citas pendientes
-    public function scopePendientes($query)
-    {
-        return $query->where('estado', 'pendiente');
-    }
 
     /// Scope para filtrar solo las citas confirmadas
     public function scopeConfirmadas($query)
