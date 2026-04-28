@@ -38,8 +38,9 @@ Route::post('/reservas', [CitasController::class, 'store'])->middleware('auth')-
 
 // Área de cliente
 Route::middleware('auth')->group(function () {
-    Route::get('/mi-perfil',  [ClienteController::class, 'perfil'])->name('perfil');
-    Route::get('/mis-citas',  [ClienteController::class, 'misCitas'])->name('mis-citas');
+    Route::get('/mi-perfil',         [ClienteController::class, 'perfil'])->name('perfil');
+    Route::get('/mis-citas',         [ClienteController::class, 'misCitas'])->name('mis-citas');
+    Route::delete('/mis-citas/{cita}', [CitasController::class, 'destroy'])->name('citas.destroy');
 });
 
 // Rutas de login

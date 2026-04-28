@@ -117,4 +117,23 @@ class CitasController extends Controller
 
         return $mejorEmpleado;
     }
+
+    /**
+     * Elimina una cita del paciente autenticado.
+     * Solo puede eliminarse si pertenece al usuario y no está completada.
+     */
+    public function destroy(Cita $cita)
+    {
+        if ($cita->paciente_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if ($cita->estado === 'completada') {
+            return back()->with('error', 'No puedes eliminar una cita que ya ha sido completada.');
+        }
+
+        $cita->delete();
+
+        return back()->with('flash_success', 'Cita eliminada correctamente.');
+    }
 }
