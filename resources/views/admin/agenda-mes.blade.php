@@ -186,10 +186,47 @@
         transition: color .12s;
     }
     .mas-link:hover { color: rgba(255,255,255,.65); }
+
+    /* Wrapper del chip + botón eliminar */
+    .cita-chip-wrap {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        width: 100%;
+    }
+    .cita-del-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        border: none;
+        background: transparent;
+        color: rgba(255,255,255,.3);
+        cursor: pointer;
+        font-size: .72rem;
+        line-height: 1;
+        flex-shrink: 0;
+        transition: background .12s, color .12s;
+        padding: 0;
+    }
+    .cita-del-btn:hover {
+        background: rgba(204,2,71,.25);
+        color: #ff6b8a;
+    }
 </style>
 @endpush
 
 @section('content')
+
+{{-- Flash de éxito --}}
+@if(session('flash_success'))
+<div class="flex items-center gap-3 mb-5 px-5 py-[.85rem] bg-[rgba(8,190,255,.08)] border border-[rgba(8,190,255,.2)] rounded-xl text-[.84rem] text-[#08beff]">
+    <i class="bi bi-check-circle-fill text-base shrink-0"></i>
+    {{ session('flash_success') }}
+</div>
+@endif
 
 <!-- Indicador de sala activa: muestra nombre, color y recuento de citas del mes (solo al filtrar por sala) -->
 @if($consultaId)
@@ -245,14 +282,27 @@
         <!-- Chips de cita: se muestran hasta 3 por día, con color de sala y datos básicos del paciente -->
         @foreach($citasDia->take(3) as $cita)
         @php $color = $cita->consulta?->color ?? '#08beff'; @endphp
-        <a href="{{ route('admin.agenda', array_merge(['fecha' => $key], $qBase)) }}"
-           title="{{ $cita->paciente->nombre }} · {{ \Carbon\Carbon::parse($cita->hora_inicio)->format('H:i') }}–{{ \Carbon\Carbon::parse($cita->hora_fin)->format('H:i') }}
+        <div class="cita-chip-wrap" style="margin-bottom:2px;">
+            <a href="{{ route('admin.agenda', array_merge(['fecha' => $key], $qBase)) }}"
+               title="{{ $cita->paciente->nombre }} · {{ \Carbon\Carbon::parse($cita->hora_inicio)->format('H:i') }}–{{ \Carbon\Carbon::parse($cita->hora_fin)->format('H:i') }}
 {{ $cita->paciente->telefono ?? '' }}
 {{ $cita->paciente->email }}"
-           class="cita-chip"
-           data-color="{{ $color }}">
-            {{ \Carbon\Carbon::parse($cita->hora_inicio)->format('H:i') }} · {{ $cita->paciente->nombre }}
-        </a>
+               class="cita-chip"
+               style="margin-bottom:0;flex:1;min-width:0;"
+               data-color="{{ $color }}">
+                {{ \Carbon\Carbon::parse($cita->hora_inicio)->format('H:i') }} · {{ $cita->paciente->nombre }}
+            </a>
+            <form method="POST" action="{{ route('admin.citas.destroy', $cita) }}" style="flex-shrink:0;">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                        onclick="return confirm('¿Eliminar esta cita?')"
+                        class="cita-del-btn"
+                        title="Eliminar cita">
+                    <i class="bi bi-x"></i>
+                </button>
+            </form>
+        </div>
         @endforeach
 
         <!-- Enlace "+N más" cuando el día tiene más de 3 citas; redirige a la vista diaria -->

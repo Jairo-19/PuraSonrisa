@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminCitasController;
 use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\HistorialClinicoController;
 
@@ -79,6 +80,11 @@ Route::middleware(['auth', 'empleado'])->prefix('admin')->name('admin.')->group(
     // Agenda / Calendario
     Route::get('/agenda',     [AgendaController::class, 'dia'])->name('agenda');
     Route::get('/agenda/mes', [AgendaController::class, 'mes'])->name('agenda.mes');
+
+    // Gestión de citas desde el panel de administración
+    Route::get('/citas/crear',     [AdminCitasController::class, 'create'])->name('citas.crear');
+    Route::post('/citas',          [AdminCitasController::class, 'store'])->name('citas.store');
+    Route::delete('/citas/{cita}', [AdminCitasController::class, 'destroy'])->name('citas.destroy');
 
     // Historial clínico por paciente
     Route::get('/pacientes/{usuario}/historial',  [HistorialClinicoController::class, 'show'])->name('historial.show');

@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
-use App\Models\Consulta;
 use App\Models\Servicio;
 use App\Models\Usuario;
+use App\Traits\AsignaCita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CitasController extends Controller
 {
+    use AsignaCita;
     /**
      * Crea una nueva cita para el paciente autenticado.
      * Asigna automáticamente la primera consulta libre en el slot solicitado.
@@ -54,68 +55,6 @@ class CitasController extends Controller
         ]);
 
         return redirect()->route('reservas')->with('flash_success', '¡Cita confirmada con éxito! Te esperamos en la clínica.');
-    }
-
-    /**
-     * Devuelve el id de la primera consulta activa que no tenga cita solapada en ese slot.
-     * Retorna null si todas están ocupadas.
-     */
-    private function consultaLibre(string $fecha, string $horaInicio, string $horaFin): ?int
-    {
-        $consultas = Consulta::activas()->get();
-
-        foreach ($consultas as $consulta) {
-            $solapada = Cita::where('consulta_id', $consulta->id)
-                ->where('fecha', $fecha)
-                ->where('hora_inicio', '<', $horaFin)
-                ->where('hora_fin',    '>', $horaInicio)
-                ->exists();
-
-            if (!$solapada) {
-                return $consulta->id;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Devuelve el id del empleado con menos citas ese día que no tenga solapamiento.
-     * Retorna null si no hay ninguno disponible.
-     */
-    private function empleadoLibre(string $fecha, string $horaInicio, string $horaFin): ?int
-    {
-        $empleados = Usuario::empleados()->get();
-
-        // Cargar citas del día para todos los empleados en una sola query
-        $citasDelDia = Cita::whereIn('empleado_id', $empleados->pluck('id'))
-            ->where('fecha', $fecha)
-            ->get()
-            ->groupBy('empleado_id');
-
-        $mejorEmpleado = null;
-        $menosCitas    = PHP_INT_MAX;
-
-        foreach ($empleados as $empleado) {
-            $citasEmpleado = $citasDelDia->get($empleado->id, collect());
-
-            // Comprobar solapamiento
-            $solapada = $citasEmpleado->contains(function ($cita) use ($horaInicio, $horaFin) {
-                return $cita->hora_inicio < $horaFin && $cita->hora_fin > $horaInicio;
-            });
-
-            if ($solapada) {
-                continue;
-            }
-
-            $total = $citasEmpleado->count();
-            if ($total < $menosCitas) {
-                $menosCitas    = $total;
-                $mejorEmpleado = $empleado->id;
-            }
-        }
-
-        return $mejorEmpleado;
     }
 
     /**

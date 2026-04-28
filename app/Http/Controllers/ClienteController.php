@@ -15,15 +15,24 @@ class ClienteController extends Controller
         return view('cliente.perfil', compact('usuario'));
     }
 
-    /** Lista de citas del cliente autenticado */
+    /** Lista de citas futuras del cliente autenticado */
     public function misCitas()
     {
         /** @var Usuario $user */
         $user  = Auth::user();
         $citas = $user->citasPaciente()
             ->with(['servicio', 'empleado'])
-            ->orderByDesc('fecha')
-            ->orderByDesc('hora_inicio')
+            ->where(function ($q) {
+                $hoy  = now()->toDateString();
+                $ahora = now()->format('H:i:s');
+                $q->where('fecha', '>', $hoy)
+                  ->orWhere(function ($q2) use ($hoy, $ahora) {
+                      $q2->where('fecha', $hoy)
+                         ->where('hora_inicio', '>=', $ahora);
+                  });
+            })
+            ->orderBy('fecha')
+            ->orderBy('hora_inicio')
             ->get();
 
         $total = $citas->count();

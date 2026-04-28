@@ -91,6 +91,18 @@
             <i class="bi bi-chevron-right text-sm"></i>
         </a>
     </div>
+
+    <!-- Separador y botón de nueva cita -->
+    <span class="w-px h-5 bg-[rgba(255,255,255,.1)] shrink-0"></span>
+
+    <a href="{{ route('admin.citas.crear', array_merge(['fecha' => $fecha], $qBase)) }}"
+       class="inline-flex items-center gap-2 px-[1.1rem] py-[.45rem] bg-[#cc0247] rounded-full
+              text-[.78rem] font-semibold text-white no-underline transition-all
+              hover:bg-[#a8013b] hover:-translate-y-px active:translate-y-0"
+       style="box-shadow:0 0 0 0;" onmouseover="this.style.boxShadow='0 6px 22px rgba(204,2,71,.38)'" onmouseout="this.style.boxShadow='none'">
+        <i class="bi bi-calendar-plus-fill"></i>
+        Nueva cita
+    </a>
 </div>
 @endsection
 
@@ -215,6 +227,14 @@
 
 @section('content')
 
+{{-- Flash de éxito (crear/eliminar cita) --}}
+@if(session('flash_success'))
+<div class="flex items-center gap-3 mb-5 px-5 py-[.85rem] bg-[rgba(8,190,255,.08)] border border-[rgba(8,190,255,.2)] rounded-xl text-[.84rem] text-[#08beff]">
+    <i class="bi bi-check-circle-fill text-base shrink-0"></i>
+    {{ session('flash_success') }}
+</div>
+@endif
+
 <!-- Chips de sala: muestra nombre, color y número de citas del día por cada sala visible -->
 <div class="flex flex-wrap gap-2 mb-5">
     @forelse($consultas as $consulta)
@@ -293,7 +313,9 @@
                     data-estado="{{ $cita->estado }}"
                     data-color="{{ $consulta->color }}"
                     data-top="{{ $top }}"
-                    data-height="{{ $height }}">
+                    data-height="{{ $height }}"
+                    data-id="{{ $cita->id }}"
+                    data-delete-url="{{ route('admin.citas.destroy', $cita) }}">
                 @if($height >= 42)
                 <div class="font-bold text-white truncate leading-tight">{{ $cita->paciente->nombre }}</div>
                 @endif
@@ -350,6 +372,20 @@
         <i class="bi bi-circle-fill text-[.4rem]"></i>
         <span id="pop-estado" class="text-[.73rem] px-2 py-0.5 rounded-full font-semibold capitalize"></span>
     </div>
+    <!-- Botón de eliminar la cita -->
+    <form id="pop-delete-form" method="POST" class="mt-3">
+        @csrf
+        @method('DELETE')
+        <button type="submit"
+                onclick="return confirm('¿Eliminar esta cita? El hueco quedará libre para nuevas reservas.')"
+                class="w-full flex items-center justify-center gap-1.5 py-[.55rem] rounded-lg
+                       text-[.76rem] font-semibold text-[rgba(255,100,100,.8)]
+                       border border-[rgba(204,2,71,.25)] bg-[rgba(204,2,71,.06)]
+                       transition-colors hover:bg-[rgba(204,2,71,.15)] hover:text-[#ff6b8a]
+                       cursor-pointer">
+            <i class="bi bi-trash3"></i> Eliminar cita
+        </button>
+    </form>
 </div>
 
 @endsection
@@ -416,6 +452,7 @@
     var popEmail    = document.getElementById('pop-email');
     var popEstado   = document.getElementById('pop-estado');
     var popDot      = document.getElementById('pop-dot');
+    var popDeleteForm = document.getElementById('pop-delete-form');
 
     var badges = { pendiente: 'badge-pendiente', confirmada: 'badge-confirmada', completada: 'badge-completada' };
 
@@ -431,6 +468,11 @@
             popEmail.textContent    = d.email;
             popEstado.textContent   = d.estado;
             popDot.style.background = d.color;
+
+            // Actualizar la URL de eliminar para esta cita concreta
+            if (popDeleteForm && d.deleteUrl) {
+                popDeleteForm.action = d.deleteUrl;
+            }
 
             popEstado.className = '';
             if (badges[d.estado]) popEstado.classList.add(badges[d.estado]);
