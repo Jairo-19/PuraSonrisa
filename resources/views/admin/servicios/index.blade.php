@@ -35,7 +35,14 @@
                     hover:-translate-y-1.5 transition-all duration-300 h-full">
 
             <!-- Foto fija en altura -->
-            <div class="h-44 w-full shrink-0 overflow-hidden">
+            <div class="h-44 w-full shrink-0 overflow-hidden relative">
+                <!-- Botón editar superpuesto -->
+                <a href="{{ route('admin.servicios.editar', $servicio) }}"
+                   title="Editar servicio"
+                   class="absolute top-2 right-2 z-10 inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/80 text-gray-500 backdrop-blur-sm transition-all no-underline hover:bg-[#08beff] hover:text-white shadow-sm">
+                    <i class="bi bi-pencil text-sm"></i>
+                </a>
+
                 @if($servicio->imagen)
                     <img src="{{ asset('imagenes/' . $servicio->imagen) }}"
                          alt="{{ $servicio->nombre }}"

@@ -56,10 +56,13 @@
     @endif
 
     <form method="POST"
-          action="{{ route('admin.servicios.store') }}"
+          action="@isset($servicio){{ route('admin.servicios.update', $servicio) }}@else{{ route('admin.servicios.store') }}@endisset"
           enctype="multipart/form-data"
           class="bg-[rgba(255,255,255,.025)] border border-[rgba(255,255,255,.07)] rounded-2xl p-8">
         @csrf
+        @isset($servicio)
+            @method('PUT')
+        @endisset
 
         <!-- Sección: información del servicio -->
         <p class="block text-[.65rem] font-bold tracking-[.16em] uppercase text-[rgba(255,255,255,.22)] pb-[.6rem] mb-[1.2rem] border-b border-[rgba(255,255,255,.06)]">
@@ -77,7 +80,7 @@
                    name="nombre"
                    class="w-full bg-[rgba(255,255,255,.04)] border border-[rgba(255,255,255,.08)] rounded-[10px] px-4 py-3 text-[.88rem] text-white outline-none transition-all placeholder:text-[rgba(255,255,255,.2)] focus:border-[#08beff] focus:bg-[rgba(8,190,255,.05)] focus:shadow-[0_0_0_3px_rgba(8,190,255,.1)]"
                    placeholder="Ej. Limpieza dental"
-                   value="{{ old('nombre') }}"
+                   value="{{ old('nombre', $servicio->nombre ?? '') }}"
                    required>
         </div>
 
@@ -90,7 +93,7 @@
             <textarea id="descripcion"
                       name="descripcion"
                       class="w-full bg-[rgba(255,255,255,.04)] border border-[rgba(255,255,255,.08)] rounded-[10px] px-4 py-3 text-[.88rem] text-white outline-none transition-all resize-y min-h-[100px] placeholder:text-[rgba(255,255,255,.2)] focus:border-[#08beff] focus:bg-[rgba(8,190,255,.05)] focus:shadow-[0_0_0_3px_rgba(8,190,255,.1)]"
-                      placeholder="Breve descripción del servicio ofrecido…">{{ old('descripcion') }}</textarea>
+                      placeholder="Breve descripción del servicio ofrecido…">{{ old('descripcion', $servicio->descripcion ?? '') }}</textarea>
         </div>
 
         <!-- Campos: precio y duración en dos columnas -->
@@ -111,7 +114,7 @@
                            step="0.01"
                            class="w-full bg-[rgba(255,255,255,.04)] border border-[rgba(255,255,255,.08)] rounded-[10px] pl-8 pr-4 py-3 text-[.88rem] text-white outline-none transition-all placeholder:text-[rgba(255,255,255,.2)] focus:border-[#08beff] focus:bg-[rgba(8,190,255,.05)] focus:shadow-[0_0_0_3px_rgba(8,190,255,.1)]"
                            placeholder="0.00"
-                           value="{{ old('precio') }}"
+                           value="{{ old('precio', $servicio->precio ?? '') }}"
                            required>
                 </div>
             </div>
@@ -131,7 +134,7 @@
                            step="1"
                            class="w-full bg-[rgba(255,255,255,.04)] border border-[rgba(255,255,255,.08)] rounded-[10px] px-4 pr-12 py-3 text-[.88rem] text-white outline-none transition-all placeholder:text-[rgba(255,255,255,.2)] focus:border-[#08beff] focus:bg-[rgba(8,190,255,.05)] focus:shadow-[0_0_0_3px_rgba(8,190,255,.1)]"
                            placeholder="30"
-                           value="{{ old('duracion_minutos') }}"
+                           value="{{ old('duracion_minutos', $servicio->duracion_minutos ?? '') }}"
                            required>
                 </div>
             </div>
@@ -178,7 +181,7 @@
                        id="activo"
                        value="1"
                        class="sr-only"
-                       {{ old('activo', '1') == '1' ? 'checked' : '' }}>
+                       {{ old('activo', $servicio->activo ?? true) ? 'checked' : '' }}>
 
                 <!-- Pista del toggle -->
                 <span class="toggle-track w-10 h-[22px] bg-[rgba(255,255,255,.12)] rounded-full relative flex-shrink-0 transition-colors">

@@ -59,4 +59,46 @@ class AdminServiciosController extends Controller
 
         return redirect()->route('admin.servicios.index')->with('success', 'Servicio creado exitosamente.');
     }
+
+    //Metodo para editar el servicio
+    public function edit(Servicio $servicio){
+        return view('admin.servicios.crear', [
+            'servicio' => $servicio,
+        ]);
+    }
+
+    //Metodo para actualizar el servicio en la base de datos
+    public function update(Request $request, Servicio $servicio){
+        //validacion de datos del formulario
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'descripcion' => ['required', 'string'],
+            'precio' => ['required', 'numeric', 'min:0'],
+            'duracion_minutos' => ['required', 'integer', 'min:1'],
+            'imagen' => ['nullable', 'image', 'max:2048'],
+            'activo' => ['nullable', 'boolean'],
+        ]);
+
+        // Guardar nueva imagen si se subió una
+        if ($request->hasFile('imagen')) {
+            // Eliminar imagen anterior si existe
+            if ($servicio->imagen && file_exists(public_path('imagenes/' . $servicio->imagen))) {
+                unlink(public_path('imagenes/' . $servicio->imagen));
+            }
+            $extension = $request->file('imagen')->getClientOriginalExtension();
+            $nombreImagen = uniqid() . '.' . $extension;
+            $request->file('imagen')->move(public_path('imagenes'), $nombreImagen);
+            $servicio->imagen = $nombreImagen;
+        }
+
+        // Actualizar datos del servicio
+        $servicio->nombre = $request->input('nombre');
+        $servicio->descripcion = $request->input('descripcion');
+        $servicio->precio = $request->input('precio');
+        $servicio->duracion_minutos = $request->input('duracion_minutos');
+        $servicio->activo = $request->boolean('activo');
+        $servicio->save();
+
+        return redirect()->route('admin.servicios.index')->with('success', 'Servicio actualizado exitosamente.');
+    }
 }
