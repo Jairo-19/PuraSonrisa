@@ -57,7 +57,7 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 
 ### 🗓️ Gestión de Citas
 - Reserva de citas por parte de clientes
-- Edición y eliminación de citas
+- Eliminación de citas
 - Creación manual desde panel admin
 - Envío automático de recordatorios por correo
 
@@ -99,12 +99,23 @@ hora_inicio_B < hora_fin_solicitada AND hora_fin_B > hora_inicio_solicitada
 - Reservar citas
 - Cancelar citas
 - Ver citas futuras
-- Ver estadísticas propias (citas realizadas, servicios más usados, etc.)
+- Ver perfil propio (`/mi-perfil`)
 - Cerrar sesión
+
+### � Agenda del Admin
+- Vista diaria (`/admin/agenda`) y mensual (`/admin/agenda/mes`) de las citas
+- Permite visualizar la distribución de citas por día y por mes desde el panel de administración
+
+### 🦷 Gestión de Servicios (Admin)
+- Listado de todos los servicios (`/admin/servicios`)
+- Crear nuevo servicio con nombre, descripción, duración, precio y foto
+- Editar y eliminar servicios existentes
+- CRUD completo accesible solo para empleados
 
 ### 🔐 Autenticación y Validaciones
 
 - Login con email y contraseña; opción "Recordarme"
+- Pantalla de carga animada (`/login/cargando`) antes de mostrar el formulario de login
 - Registro con los siguientes campos y validaciones:
   - **Nombre** — obligatorio, máx. 255 caracteres
   - **Email** — obligatorio, formato válido, único en la BD

@@ -42,8 +42,9 @@ class AdminServiciosController extends Controller
         // Guardar imagen si se subió una
         $imagen = null;
         if ($request->hasFile('imagen')) {
-            $extension = $request->file('imagen')->getClientOriginalExtension();
-            $imagen = uniqid() . '.' . $extension;
+            $nombreBase = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension  = $request->file('imagen')->getClientOriginalExtension();
+            $imagen     = $nombreBase . '_' . time() . '.' . $extension;
             $request->file('imagen')->move(public_path('imagenes'), $imagen);
         }
 
@@ -85,8 +86,9 @@ class AdminServiciosController extends Controller
             if ($servicio->imagen && file_exists(public_path('imagenes/' . $servicio->imagen))) {
                 unlink(public_path('imagenes/' . $servicio->imagen));
             }
-            $extension = $request->file('imagen')->getClientOriginalExtension();
-            $nombreImagen = uniqid() . '.' . $extension;
+            $nombreBase   = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension    = $request->file('imagen')->getClientOriginalExtension();
+            $nombreImagen = $nombreBase . '_' . time() . '.' . $extension;
             $request->file('imagen')->move(public_path('imagenes'), $nombreImagen);
             $servicio->imagen = $nombreImagen;
         }
@@ -100,5 +102,17 @@ class AdminServiciosController extends Controller
         $servicio->save();
 
         return redirect()->route('admin.servicios.index')->with('success', 'Servicio actualizado exitosamente.');
+    }
+
+    //Eliminar el servicio de la base de datos
+    public function destroy(Servicio $servicio){
+        // Eliminar imagen del disco si existe
+        if ($servicio->imagen && file_exists(public_path('imagenes/' . $servicio->imagen))) {
+            unlink(public_path('imagenes/' . $servicio->imagen));
+        }
+
+        $servicio->delete();
+
+        return redirect()->route('admin.servicios.index')->with('success', 'Servicio eliminado correctamente.');
     }
 }

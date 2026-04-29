@@ -36,12 +36,24 @@
 
             <!-- Foto fija en altura -->
             <div class="h-44 w-full shrink-0 overflow-hidden relative">
-                <!-- Botón editar superpuesto -->
-                <a href="{{ route('admin.servicios.editar', $servicio) }}"
-                   title="Editar servicio"
-                   class="absolute top-2 right-2 z-10 inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/80 text-gray-500 backdrop-blur-sm transition-all no-underline hover:bg-[#08beff] hover:text-white shadow-sm">
-                    <i class="bi bi-pencil text-sm"></i>
-                </a>
+                <!-- Botones superpuestos: editar y eliminar -->
+                <div class="absolute top-2 right-2 z-10 flex gap-1">
+                    <a href="{{ route('admin.servicios.editar', $servicio) }}"
+                       title="Editar servicio"
+                       class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/80 text-gray-500 backdrop-blur-sm transition-all no-underline hover:bg-[#08beff] hover:text-white shadow-sm">
+                        <i class="bi bi-pencil text-sm"></i>
+                    </a>
+                    <form method="POST" action="{{ route('admin.servicios.destroy', $servicio) }}"
+                          onsubmit="return confirm('¿Eliminar el servicio «{{ $servicio->nombre }}»? Esta acción no se puede deshacer.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                title="Eliminar servicio"
+                                class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/80 text-gray-500 backdrop-blur-sm transition-all border-0 cursor-pointer hover:bg-[#cc0247] hover:text-white shadow-sm">
+                            <i class="bi bi-trash text-sm"></i>
+                        </button>
+                    </form>
+                </div>
 
                 @if($servicio->imagen)
                     <img src="{{ asset('imagenes/' . $servicio->imagen) }}"
