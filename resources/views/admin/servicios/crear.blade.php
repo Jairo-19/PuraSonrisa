@@ -93,6 +93,51 @@
                       placeholder="Breve descripción del servicio ofrecido…">{{ old('descripcion') }}</textarea>
         </div>
 
+        <!-- Campos: precio y duración en dos columnas -->
+        <div class="grid grid-cols-2 gap-4 mb-5">
+
+            <!-- Campo: precio -->
+            <div>
+                <label class="block text-[.75rem] font-semibold tracking-[.08em] uppercase text-[rgba(255,255,255,.38)] mb-[.45rem]"
+                       for="precio">
+                    Precio (€)
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(255,255,255,.3)] text-[.88rem] pointer-events-none">€</span>
+                    <input type="number"
+                           id="precio"
+                           name="precio"
+                           min="0"
+                           step="0.01"
+                           class="w-full bg-[rgba(255,255,255,.04)] border border-[rgba(255,255,255,.08)] rounded-[10px] pl-8 pr-4 py-3 text-[.88rem] text-white outline-none transition-all placeholder:text-[rgba(255,255,255,.2)] focus:border-[#08beff] focus:bg-[rgba(8,190,255,.05)] focus:shadow-[0_0_0_3px_rgba(8,190,255,.1)]"
+                           placeholder="0.00"
+                           value="{{ old('precio') }}"
+                           required>
+                </div>
+            </div>
+
+            <!-- Campo: duración en minutos -->
+            <div>
+                <label class="block text-[.75rem] font-semibold tracking-[.08em] uppercase text-[rgba(255,255,255,.38)] mb-[.45rem]"
+                       for="duracion_minutos">
+                    Duración (min)
+                </label>
+                <div class="relative">
+                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[rgba(255,255,255,.3)] text-[.82rem] pointer-events-none">min</span>
+                    <input type="number"
+                           id="duracion_minutos"
+                           name="duracion_minutos"
+                           min="1"
+                           step="1"
+                           class="w-full bg-[rgba(255,255,255,.04)] border border-[rgba(255,255,255,.08)] rounded-[10px] px-4 pr-12 py-3 text-[.88rem] text-white outline-none transition-all placeholder:text-[rgba(255,255,255,.2)] focus:border-[#08beff] focus:bg-[rgba(8,190,255,.05)] focus:shadow-[0_0_0_3px_rgba(8,190,255,.1)]"
+                           placeholder="30"
+                           value="{{ old('duracion_minutos') }}"
+                           required>
+                </div>
+            </div>
+
+        </div>
+
         <!-- Campo: imagen del servicio -->
         <div class="mb-5">
             <label class="block text-[.75rem] font-semibold tracking-[.08em] uppercase text-[rgba(255,255,255,.38)] mb-[.45rem]">
