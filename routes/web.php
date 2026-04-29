@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminCitasController;
 use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\HistorialClinicoController;
+use App\Http\Controllers\Admin\AdminServiciosController;
 
 use App\Http\Controllers\CitasController;
 use App\Http\Controllers\ClienteController;
@@ -90,4 +91,13 @@ Route::middleware(['auth', 'empleado'])->prefix('admin')->name('admin.')->group(
     Route::get('/pacientes/{usuario}/historial',  [HistorialClinicoController::class, 'show'])->name('historial.show');
     Route::post('/pacientes/{usuario}/historial', [HistorialClinicoController::class, 'store'])->name('historial.store');
     Route::delete('/historial/{historial}',       [HistorialClinicoController::class, 'destroy'])->name('historial.destroy');
-});
+
+    //Rutas para gestionar los servicios
+    Route::get('/servicios',                   [AdminServiciosController::class, 'index'])->name('servicios.index');
+    Route::get('/servicios/crear',             [AdminServiciosController::class, 'create'])->name('servicios.crear');
+    Route::post('/servicios',                  [AdminServiciosController::class, 'store'])->name('servicios.store');
+    Route::get('/servicios/{servicio}/editar', [AdminServiciosController::class, 'edit'])->name('servicios.editar');
+    Route::put('/servicios/{servicio}',        [AdminServiciosController::class, 'update'])->name('servicios.update');
+    Route::delete('/servicios/{servicio}',     [AdminServiciosController::class, 'destroy'])->name('servicios.destroy');
+    
+    });

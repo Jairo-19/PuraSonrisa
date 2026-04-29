@@ -74,11 +74,12 @@
             Agenda
         </a>
 
-        @foreach([['bi-folder2-open','Historiales'],['bi-scissors','Servicios']] as [$ico,$lbl])
-        <span class="flex items-center gap-3 px-[.85rem] py-[.65rem] rounded-[10px] text-[.84rem] font-medium text-[rgba(255,255,255,.32)] mb-[.15rem] opacity-35 pointer-events-none">
-            <i class="bi {{ $ico }} text-base shrink-0"></i> {{ $lbl }}
-        </span>
-        @endforeach
+        <a href="{{ route('admin.servicios.index') }}"
+           class="flex items-center gap-3 px-[.85rem] py-[.65rem] rounded-[10px] text-[.84rem] font-medium no-underline transition-all cursor-pointer mb-[.15rem]
+                  {{ request()->routeIs('admin.servicios*') ? 'bg-[rgba(8,190,255,.1)] text-[#08beff]' : 'text-[rgba(255,255,255,.32)] hover:bg-[rgba(255,255,255,.05)] hover:text-[rgba(255,255,255,.75)]' }}">
+            <i class="bi bi-scissors text-base shrink-0"></i>
+            Servicios
+        </a>
     </nav>
 
     <!-- Footer del sidebar: usuario + logout -->
