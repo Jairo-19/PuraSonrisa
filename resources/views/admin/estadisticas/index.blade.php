@@ -3,16 +3,21 @@
 @section('titulo', 'Estadísticas')
 @section('subtitulo', 'Resumen de actividad')
 
+<!-- Estilos específicos de esta vista. Se inyectan en el <head> del layout mediante @stack('styles') -->
 @push('styles')
 <style>
+    /* Retrasa la animación de entrada de cada card para crear un efecto escalonado */
     .kpi-card:nth-child(2) { animation-delay: .08s; }
     .kpi-card:nth-child(3) { animation-delay: .16s; }
+    /* El bloque del gráfico aparece después de las cards */
     .chart-wrap { animation: fadeUp .5s .22s ease-out both; }
 </style>
 @endpush
 
 @section('content')
 
+<!-- Sección de tarjetas KPI (Key Performance Indicators): muestran un número clave cada una -->
+<!-- El grid se adapta automáticamente al ancho disponible gracias a auto-fit y minmax -->
 {{-- KPI Cards --}}
 <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-4 mb-8">
 
@@ -69,6 +74,7 @@
 
 </div>
 
+<!-- Sección del gráfico de barras. Chart.js lo dibuja sobre el elemento <canvas> -->
 {{-- Gráfico Top 5 servicios --}}
 <div class="chart-wrap bg-[rgba(255,255,255,.025)] border border-[rgba(255,255,255,.07)] rounded-2xl p-6">
 
@@ -98,9 +104,13 @@
 
 @endsection
 
+<!-- Los scripts se inyectan al final del <body> mediante @stack('scripts') del layout -->
+<!-- Se carga Chart.js desde CDN para no añadir dependencias al proyecto -->
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
+    // @@json() es una directiva Blade que convierte una colección PHP a JSON válido para JavaScript
+    // pluck('nombre') extrae solo esa columna de cada objeto de la colección
     const labels = @json($serviciosTop->pluck('nombre'));
     const datos  = @json($serviciosTop->pluck('citas_count'));
 
