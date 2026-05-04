@@ -27,8 +27,11 @@
 
     </section>
 
+    <!-- Contenedor con degradado continuo para todas las secciones de contenido -->
+    <div style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);">
+
     <!--Sección de experiencia -->
-    <section class="bg-[#fffbf4] py-20 px-8">
+    <section class="py-20 px-8">
         <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
 
             <!-- Imagen de la sección experiencia -->
@@ -52,7 +55,7 @@
     </section>
 
     <!--Sección de 2 -->
-    <section class="bg-white py-20 px-8">
+    <section class="py-20 px-8">
         <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
 
             <!-- Texto introductorio -->
@@ -76,7 +79,7 @@
     </section>
 
     <!-- Seccion de servicios generales -->
-    <section style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);" class="py-20 px-8">
+    <section class="py-20 px-8">
 
         <div class="max-w-5xl mx-auto text-center mb-12">
             <h2 class="text-4xl font-bold text-gray-800">Nuestros <span class="text-[#cc0247]">servicios</span></h2>
@@ -126,6 +129,8 @@
 
         </div>
     </section>
+
+    </div><!-- fin del contenedor con degradado -->
 
     <style>
         /* Imagen de fondo : fija, cubre toda la pantalla */

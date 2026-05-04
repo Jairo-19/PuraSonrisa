@@ -48,7 +48,8 @@
     </div>
 </div>
 @endif
-<section class="py-14 px-4 mt-20" id="pasos" style="background: #fffbf4;">
+<div style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);">
+<section class="py-14 px-4 mt-20" id="pasos">
     <div class="max-w-2xl mx-auto">
 
         <!-- Track visual -->
@@ -102,7 +103,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      CONTENIDO DE CADA PASO
 ════════════════════════════════════════════════════════════ -->
-<div class="pb-32 px-4" id="step-content" style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);">
+<div class="pb-32 px-4" id="step-content">
 
     <!-- ── PASO 1: Elige tu servicio ─────────────────────── -->
     <div id="step-1-content" class="max-w-5xl mx-auto pt-2">
@@ -334,6 +335,8 @@
      data-auth="{{ auth()->check() ? '1' : '0' }}"
      data-login-url="{{ route('login.loading') }}"
      class="hidden"></div>
+
+</div>{{-- fin del contenedor con degradado --}}
 
 @endsection
 

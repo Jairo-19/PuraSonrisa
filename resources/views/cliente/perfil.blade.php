@@ -40,7 +40,7 @@
 </section>
 
 <!-- Contenido -->
-<section class="min-h-screen py-14 px-4" style="background: linear-gradient(to bottom, #fffbf4, #e8e2d9);">
+<section class="min-h-screen py-14 px-4" style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);">
     <div class="max-w-2xl mx-auto space-y-6">
 
         {{-- ══════════════════════════════════════════

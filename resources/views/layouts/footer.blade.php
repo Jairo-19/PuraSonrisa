@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('reservas') }}"
                        class="text-gray-400 hover:text-[#cc0247] transition-colors duration-300 text-sm">
                         Reserva
                     </a>
