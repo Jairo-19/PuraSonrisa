@@ -80,6 +80,13 @@
             <i class="bi bi-scissors text-base shrink-0"></i>
             Servicios
         </a>
+
+        <a href="{{ route('admin.estadisticas.index') }}"
+           class="flex items-center gap-3 px-[.85rem] py-[.65rem] rounded-[10px] text-[.84rem] font-medium no-underline transition-all cursor-pointer mb-[.15rem]
+                  {{ request()->routeIs('admin.estadisticas*') ? 'bg-[rgba(8,190,255,.1)] text-[#08beff]' : 'text-[rgba(255,255,255,.32)] hover:bg-[rgba(255,255,255,.05)] hover:text-[rgba(255,255,255,.75)]' }}">
+            <i class="bi bi-bar-chart-line text-base shrink-0"></i>
+            Estadísticas
+        </a>
     </nav>
 
     <!-- Footer del sidebar: usuario + logout -->

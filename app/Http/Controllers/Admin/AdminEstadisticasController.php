@@ -36,7 +36,7 @@ class AdminEstadisticasController extends Controller
             ->take(5)
             ->get();
 
-        return view('admin.estadisticas', compact(
+        return view('admin.estadisticas.index', compact(
             'totalCitasMes',
             'ingresos',
             'nuevosClientes',
