@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\AdminCitasController;
 use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\HistorialClinicoController;
 use App\Http\Controllers\Admin\AdminServiciosController;
-
+use App\Http\Controllers\Admin\AdminEstadisticasController;
 use App\Http\Controllers\CitasController;
 use App\Http\Controllers\ClienteController;
 
@@ -100,4 +100,6 @@ Route::middleware(['auth', 'empleado'])->prefix('admin')->name('admin.')->group(
     Route::put('/servicios/{servicio}',        [AdminServiciosController::class, 'update'])->name('servicios.update');
     Route::delete('/servicios/{servicio}',     [AdminServiciosController::class, 'destroy'])->name('servicios.destroy');
     
+    //Ruta de las estadisticas
+    Route::get('/estadisticas', [AdminEstadisticasController::class, 'index'])->name('estadisticas.index');
     });
