@@ -9,10 +9,20 @@ class ServiciosController extends Controller
 {
     
     public function index()
-    {   //Obtengo los servicios activos de la base de datos
+    {
+        // Servicios activos para el catálogo completo
         $servicios = Servicio::activos()->get();
-        //Retorno la vista de servicios con los servicios obtenidos
-        return view('pagina.servicios', compact('servicios'));
+
+        // Top 3 por número de citas para el podio
+        // Se obtienen ordenados por demanda: [0]=1º, [1]=2º, [2]=3º
+        // En la vista se reordenan visualmente: izquierda=2º, centro=1º, derecha=3º
+        $top3 = Servicio::activos()
+            ->withCount('citas')
+            ->orderByDesc('citas_count')
+            ->take(3)
+            ->get();
+
+        return view('pagina.servicios', compact('servicios', 'top3'));
     }
 
 }

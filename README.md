@@ -112,6 +112,12 @@ hora_inicio_B < hora_fin_solicitada AND hora_fin_B > hora_inicio_solicitada
 - Editar y eliminar servicios existentes
 - CRUD completo accesible solo para empleados
 
+### 👥 Gestión de Usuarios (Admin)
+- Listado de todos los usuarios (`/admin/usuarios`)
+- Crear nuevo usuario desde el panel (`/admin/usuarios/crear`) con asignación de rol
+- Editar datos de cualquier usuario existente
+- CRUD completo accesible solo para empleados
+
 ### 🔐 Autenticación y Validaciones
 
 - Login con email y contraseña; opción "Recordarme"
@@ -145,9 +151,10 @@ hora_inicio_B < hora_fin_solicitada AND hora_fin_B > hora_inicio_solicitada
 - Soporte básico inicial
 
 ### 📊 Estadísticas
-- Número de citas
-- Servicios más demandados
-- Actividad de usuarios
+- Total de citas del mes actual
+- Nuevos clientes registrados este mes
+- Ingresos generados por citas completadas este mes
+- Top 5 servicios más reservados (gráfico de barras con Chart.js)
 
 ### 🏆 Podio de Servicios Más Pedidos
 - Sección visual en la página de servicios con los 3 servicios más solicitados
