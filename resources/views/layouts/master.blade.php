@@ -32,7 +32,8 @@
 
    @include('layouts.footer')
 
-    @stack('scripts')
+    @include('components.chatbot')
+
     @stack('scripts')
 </body>
 </html>
