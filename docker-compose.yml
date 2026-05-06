@@ -1,0 +1,84 @@
+# =============================================================
+#  n8n + Cloudflare Tunnel
+#  n8n local:    http://localhost:5678
+#  n8n público:  URL temporal generada por cloudflared (ver logs)
+# =============================================================
+#
+#  COMANDOS GENERALES:
+#  -------------------
+#  Arrancar todo:              docker-compose up -d
+#  Parar todo:                 docker-compose stop
+#  Arrancar tras parar:        docker-compose start
+#  Eliminar contenedores:      docker-compose down
+#  Eliminar TODO (con datos):  docker-compose down -v
+#
+#  COMANDOS POR CONTENEDOR:
+#  ------------------------
+#  Ver logs de n8n:              docker-compose logs -f n8n
+#  Ver URL pública del túnel:    docker-compose logs -f cloudflared
+#
+#  Arrancar solo cloudflared:    docker-compose start cloudflared
+#  Parar solo cloudflared:       docker-compose stop cloudflared
+#  Eliminar solo cloudflared:    docker-compose rm -f cloudflared
+#
+#  Arrancar solo n8n:            docker-compose start n8n
+#  Parar solo n8n:               docker-compose stop n8n
+#  Eliminar solo n8n:            docker-compose rm -f n8n
+# =============================================================
+
+services:
+
+  # -----------------------------------------------------------
+  #  n8n — Plataforma de automatización de flujos de trabajo
+  # -----------------------------------------------------------
+  n8n:
+    # Imagen oficial de n8n
+    image: docker.n8n.io/n8nio/n8n
+
+    # Nombre del contenedor en Docker
+    container_name: n8n
+
+    # Puerto host:contenedor — accedes desde localhost:5678
+    ports:
+      - "5678:5678"
+
+    # Volumen persistente — los datos NO se pierden al parar el contenedor
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+    # Se reinicia automáticamente si Docker se reinicia (ej: al encender el PC)
+    # "unless-stopped" = reinicia siempre excepto si lo paras manualmente
+    restart: unless-stopped
+
+  # -----------------------------------------------------------
+  #  cloudflared — Túnel de Cloudflare
+  #  Expone n8n a internet SIN abrir puertos en el router.
+  #  Crea un túnel cifrado entre tu máquina y Cloudflare,
+  #  que genera una URL pública temporal para acceder a n8n.
+  #  La URL aparece en los logs: docker-compose logs -f cloudflared
+  # -----------------------------------------------------------
+  cloudflared:
+    # Imagen oficial de Cloudflare
+    image: cloudflare/cloudflared:latest
+
+    # Nombre del contenedor en Docker
+    container_name: cloudflared
+
+    # Equivale a ejecutar: cloudflared tunnel --url http://localhost:5678
+    # PERO dentro de Docker NO se usa "localhost" sino el nombre del servicio "n8n",
+    # porque cada contenedor tiene su propia red interna.
+    # Este comando se ejecuta AUTOMÁTICAMENTE al arrancar el contenedor.
+    # NO necesitas ejecutarlo manualmente nunca.
+    command: tunnel --url http://n8n:5678
+
+    # Espera a que n8n esté listo antes de arrancar el túnel
+    depends_on:
+      - n8n
+
+    restart: unless-stopped
+
+# Declaración del volumen persistente de n8n
+# "external: true" indica que el volumen ya existe y Docker Compose no debe recrearlo
+volumes:
+  n8n_data:
+    external: true
