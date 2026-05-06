@@ -1,8 +1,3 @@
-{{-- ============================================================
-     CHATBOT WIDGET — PuraSonrisa
-     Lógica de respuestas: implementa tus funciones onclick aquí
-     ============================================================ --}}
-
 <style>
     /* Zona de mensajes sin scrollbar visible */
     #chatbot-messages::-webkit-scrollbar { display: none; }
@@ -36,7 +31,7 @@
     }
 </style>
 
-{{-- ── BOTÓN FLOTANTE ── --}}
+<!-- ── BOTÓN FLOTANTE ── -->
 <button
     id="chatbot-toggle"
     onclick="toggleChat()"
@@ -49,13 +44,13 @@
     <i id="chatbot-icon-close" class="bi bi-x-lg hidden"></i>
 </button>
 
-{{-- ── PANEL DEL CHAT ── --}}
+<!-- ── PANEL DEL CHAT ── -->
 <div
     id="chatbot-panel"
     class="chatbot-hidden fixed bottom-24 right-6 z-50 w-80 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
     style="height: 480px; background: #f3f4f6;"
 >
-    {{-- HEADER --}}
+    <!-- HEADER -->
     <div class="flex items-center justify-between px-4 py-3" style="background: #08beff;">
         <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
@@ -71,18 +66,18 @@
         </button>
     </div>
 
-    {{-- ZONA DE MENSAJES --}}
+    <!-- ZONA DE MENSAJES -->
     <div
         id="chatbot-messages"
         class="flex-1 overflow-y-auto flex flex-col gap-3 px-4 py-4"
     >
-        {{-- Mensaje inicial del bot --}}
+        <!-- Mensaje inicial del bot -->
         <div class="msg-bot text-sm px-3 py-2 max-w-[85%]">
             ¡Hola! 👋 Soy tu asistente virtual.<br>¿En qué puedo ayudarte hoy?
         </div>
     </div>
 
-    {{-- OPCIONES RÁPIDAS --}}
+    <!-- OPCIONES RÁPIDAS -->
     <div id="chatbot-quick" class="px-4 pb-3">
         <p class="text-gray-400 text-xs font-semibold tracking-widest uppercase mb-2">Opciones rápidas:</p>
         <div class="flex flex-wrap gap-2">
@@ -135,7 +130,6 @@
 
     // ── AÑADIR BURBUJA ────────────────────────────────────────────
     // Llama a esta función desde tus onclick para mostrar mensajes
-    // tipo: 'bot' | 'user'
     function addMessage(text, tipo = 'bot') {
         const container = document.getElementById('chatbot-messages');
         const div = document.createElement('div');
@@ -155,7 +149,6 @@
     function quickOption(btn, opcion) {
         addMessage(opcion, 'user');
 
-        // TODO: aquí implementa la respuesta según la opción
-        // Ejemplo: botResponse(opcion);
+     
     }
 </script>

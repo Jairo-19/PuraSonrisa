@@ -23,6 +23,9 @@
         from { opacity: 0; transform: translateY(28px); }
         to   { opacity: 1; transform: translateY(0); }
     }
+    body {
+        background-color: #FEFAF3;
+    }
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -37,19 +40,21 @@
     </div>
 </section>
 
+<div style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);">
+
 <!-- ═══════════════════════════════════════════════════════════
      MAPA DE PASOS (step tracker)
 ════════════════════════════════════════════════════════════ -->
 @if(session('flash_success'))
-<div class="max-w-2xl mx-auto mt-10 px-4">
+<div id="flash-alert" class="max-w-2xl mx-auto mt-10 px-4" >
     <div class="flex items-center gap-3 px-5 py-4 bg-green-50 border border-green-200 rounded-2xl text-sm text-green-700 font-medium">
         <i class="bi bi-check-circle-fill text-green-500 text-base shrink-0"></i>
         {{ session('flash_success') }}
     </div>
 </div>
 @endif
-<div style="background: linear-gradient(to bottom, #fffbf4, #D1CBCB);">
-<section class="py-14 px-4 mt-20" id="pasos">
+
+<section class="py-14 px-4" id="pasos">
     <div class="max-w-2xl mx-auto">
 
         <!-- Track visual -->
@@ -342,6 +347,18 @@
 
 @push('scripts')
 <script>
+    /* ═══════════════════════════════════════════════════
+       AUTO-DISMISS ALERTA FLASH
+    ═══════════════════════════════════════════════════ */
+    const flashAlert = document.getElementById('flash-alert');
+    if (flashAlert) {
+        setTimeout(() => {
+            flashAlert.style.opacity = '0';
+            flashAlert.style.visibility = 'hidden';
+            flashAlert.style.transition = 'opacity 0.5s ease, visibility 0.5s ease';
+        }, 4000);
+    }
+
     const _cfg      = document.getElementById('app-config').dataset;
     const AUTH_USER = _cfg.auth === '1';
     const LOGIN_URL = _cfg.loginUrl;
