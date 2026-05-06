@@ -21,10 +21,11 @@
 
     /* Burbuja de mensaje del bot */
     .msg-bot {
-        background: #1e2535;
-        color: #e8eaf0;
+        background: #ffffff;
+        color: #1e2535;
         border-radius: 0 14px 14px 14px;
         align-self: flex-start;
+        box-shadow: 0 1px 3px rgba(0,0,0,.08);
     }
     /* Burbuja de mensaje del usuario */
     .msg-user {
@@ -52,7 +53,7 @@
 <div
     id="chatbot-panel"
     class="chatbot-hidden fixed bottom-24 right-6 z-50 w-80 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
-    style="height: 480px; background: #111827;"
+    style="height: 480px; background: #f3f4f6;"
 >
     {{-- HEADER --}}
     <div class="flex items-center justify-between px-4 py-3" style="background: #08beff;">
@@ -83,31 +84,31 @@
 
     {{-- OPCIONES RÁPIDAS --}}
     <div id="chatbot-quick" class="px-4 pb-3">
-        <p class="text-gray-500 text-xs font-semibold tracking-widest uppercase mb-2">Opciones rápidas:</p>
+        <p class="text-gray-400 text-xs font-semibold tracking-widest uppercase mb-2">Opciones rápidas:</p>
         <div class="flex flex-wrap gap-2">
             <button onclick="quickOption(this, 'Horarios')"
-                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-600
-                       text-gray-300 hover:border-[#08beff] hover:text-[#08beff] transition-colors">
+                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
+                       text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
                 <i class="bi bi-clock"></i> Horarios
             </button>
             <button onclick="quickOption(this, 'Precios y Planes')"
-                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-600
-                       text-gray-300 hover:border-[#08beff] hover:text-[#08beff] transition-colors">
+                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
+                       text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
                 <i class="bi bi-grid"></i> Precios y Planes
             </button>
             <button onclick="quickOption(this, 'Clases Disponibles')"
-                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-600
-                       text-gray-300 hover:border-[#08beff] hover:text-[#08beff] transition-colors">
+                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
+                       text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
                 <i class="bi bi-hourglass-split"></i> Clases Disponibles
             </button>
             <button onclick="quickOption(this, 'Ubicación')"
-                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-600
-                       text-gray-300 hover:border-[#08beff] hover:text-[#08beff] transition-colors">
+                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
+                       text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
                 <i class="bi bi-geo-alt"></i> Ubicación
             </button>
             <button onclick="quickOption(this, 'Contacto')"
-                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-600
-                       text-gray-300 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
+                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
+                       text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
                 <i class="bi bi-telephone"></i> Contacto
             </button>
         </div>
