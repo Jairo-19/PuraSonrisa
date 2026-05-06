@@ -86,21 +86,19 @@
                        text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
                 <i class="bi bi-clock"></i> Horarios
             </button>
-            <button onclick="quickOption(this, 'Precios y Planes')"
+
+            <button onclick="quickOption(this, 'Servicios y precios')"
                 class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
                        text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
-                <i class="bi bi-grid"></i> Precios y Planes
+                <i class="bi bi-grid"></i> Servicios y precios
             </button>
-            <button onclick="quickOption(this, 'Clases Disponibles')"
-                class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
-                       text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
-                <i class="bi bi-hourglass-split"></i> Clases Disponibles
-            </button>
+    
             <button onclick="quickOption(this, 'Ubicación')"
                 class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
                        text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
                 <i class="bi bi-geo-alt"></i> Ubicación
             </button>
+
             <button onclick="quickOption(this, 'Contacto')"
                 class="chatbot-chip flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-gray-300
                        text-gray-600 hover:border-[#cc0247] hover:text-[#cc0247] transition-colors">
@@ -147,8 +145,56 @@
 
     // ── OPCIÓN RÁPIDA ─────────────────────────────────────────────
     function quickOption(btn, opcion) {
+        // 1. Mostrar el mensaje del usuario
         addMessage(opcion, 'user');
 
-     
+        // 2. Esperar 500ms para que parezca natural
+        setTimeout(() => {
+            // 3. Si es "Servicios y precios", hacer fetch a la BD
+            if (opcion === 'Servicios y precios') {
+                // Mostrar mensaje de carga
+                addMessage('⏳ <i>Cargando servicios...</i>', 'bot');
+                
+                // Hacer petición AJAX a la ruta /api/chatbot/servicios
+                fetch('{{ route('chatbot.servicios') }}')
+                    .then(response => {
+                        // Verificar si la respuesta es correcta (status 200)
+                        if (!response.ok) {
+                            throw new Error(`Error HTTP: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Construir el mensaje con los servicios
+                        let servicios = '<b>💰 Servicios y Precios:</b><br>';
+                        
+                        // Recorrer cada servicio y agregarlo al formato HTML
+                        data.forEach(servicio => {
+                            servicios += `• ${servicio.nombre}: $${parseFloat(servicio.precio).toFixed(2)}<br>`;
+                        });
+                        
+                        // Mostrar los servicios en el chat
+                        addMessage(servicios, 'bot');
+                    })
+                    .catch(error => {
+                        // Mostrar el error completo para debugging
+                        console.error('Error en fetch:', error);
+                        addMessage('❌ <b>Error:</b> No pude cargar los servicios.<br><small>' + error.message + '</small>', 'bot');
+                    });
+            } else {
+                // Diccionario de respuestas estáticas
+                const respuestas = {
+                    'Horarios': '📅 <b>Horarios:</b><br>Lunes-Viernes: 8:00-18:00<br>Sábado: 9:00-13:00',
+                    'Ubicación': '📍 Calle Principal 123<br>Tel: +1-800-SONRISA',
+                    'Contacto': '📧 info@purasonrisa.com<br>📞 +1-800-SONRISA',
+                };
+
+                // Obtener la respuesta (o usar la por defecto si no existe)
+                const respuesta = respuestas[opcion] || '¿Podrías reformular tu pregunta?';
+
+                // Mostrar la respuesta del bot
+                addMessage(respuesta, 'bot');
+            }
+        }, 500);
     }
 </script>

@@ -35,6 +35,12 @@ Route::get('/reservas', [ReservasController::class, 'index'])->name('reservas');
 // AJAX: slots disponibles para una fecha y duración (accesible sin auth para poder ver disponibilidad)
 Route::get('/reservas/slots', [ReservasController::class, 'slots'])->name('reservas.slots');
 
+// AJAX: Obtener servicios activos para el chatbot
+Route::get('/api/chatbot/servicios', function() {
+    $servicios = \App\Models\Servicio::activos()->get(['nombre', 'precio']);
+    return response()->json($servicios);
+})->name('chatbot.servicios');
+
 // Confirmar reserva — requiere estar autenticado como cliente
 Route::post('/reservas', [CitasController::class, 'store'])->middleware('auth')->name('citas.store');
 
