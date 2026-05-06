@@ -27,7 +27,11 @@
 - XAMPP (Apache + MySQL/MariaDB)
 
 ### 🔹 Automatización & IA
-- n8n (opcional)
+- n8n
+  - ⏰ Recordatorio de Cita por Email
+  - 📊 Reporte diario de Citas
+  - 📧 Email de bienvenida automático
+- Mailtrap (entorno de desarrollo)
 - Funciones de IA (agents.md, skills)
 
 ### 🤖 Skills instaladas (Copilot Agent)
@@ -59,7 +63,7 @@ El proyecto está basado en una arquitectura monolítica (todo lo maneja Laravel
 - Reserva de citas por parte de clientes
 - Eliminación de citas
 - Creación manual desde panel admin
-- Envío automático de recordatorios por correo
+- Envío automático de recordatorios por correo (gestionado por n8n)
 
 #### 📐 Lógica de reservas y consultas
 
@@ -146,9 +150,10 @@ hora_inicio_B < hora_fin_solicitada AND hora_fin_B > hora_inicio_solicitada
 > **`migrate:fresh` y datos del historial**
 > Ejecutar `migrate:fresh` borra todas las tablas, incluidas `historial_clinico` e `imagenes_clinicas`. Los ficheros físicos en `public/imagenes/historial/` quedan huérfanos (sin registro en BD). En **desarrollo** no es problema: se pierden datos de prueba como con cualquier otra tabla. En **producción** nunca se usa `migrate:fresh`; solo `migrate` para aplicar cambios incrementales sin borrar datos.
 
-### 🤖 Chatbot (Simulación)
+### 🤖 Chatbot
 - Respuestas automáticas a preguntas frecuentes
-- Soporte básico inicial
+- Opciones rápidas: Horarios, Servicios y precios, Ubicación, Contacto
+- Servicios y precios cargados dinámicamente desde la base de datos
 
 ### 📊 Estadísticas
 - Total de citas del mes actual
