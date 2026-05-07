@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminServiciosController;
 use App\Http\Controllers\Admin\AdminEstadisticasController;
 use App\Http\Controllers\CitasController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\Api\CitasMananaController;
 
 //Aqui defino la ruta para la pagina de inicio
 Route::get('/', HomeController::class)->name('home');
@@ -40,6 +41,9 @@ Route::get('/api/chatbot/servicios', function() {
     $servicios = \App\Models\Servicio::activos()->get(['nombre', 'precio']);
     return response()->json($servicios);
 })->name('chatbot.servicios');
+
+// API: Citas de mañana — usada por n8n para enviar recordatorios por email
+Route::get('/api/citas/manana', CitasMananaController::class)->name('api.citas.manana');
 
 // Confirmar reserva — requiere estar autenticado como cliente
 Route::post('/reservas', [CitasController::class, 'store'])->middleware('auth')->name('citas.store');
