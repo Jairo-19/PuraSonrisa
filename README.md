@@ -26,11 +26,16 @@
 ### 🔹 Infraestructura
 - XAMPP (Apache + MySQL/MariaDB)
 
+### 🔹 Contenedores (Docker)
+- **n8n** — Plataforma de automatización de flujos de trabajo en contenedor
+- **Cloudflare Tunnel** — Expone n8n a internet sin abrir puertos en el router (mismo contenedor que n8n)
+- Acceso local: `http://localhost:5678`
+- Orquestación: `docker-compose.yml` con volumen persistente `n8n_data`
+
 ### 🔹 Automatización & IA
 - n8n
-  - ⏰ Recordatorio de Cita por Email
-  - 📊 Reporte diario de Citas
-  - 📧 Email de bienvenida automático
+  -  Recordatorio de Cita por Email
+  -  Email de bienvenida automático
 - Mailtrap (entorno de desarrollo)
 - Funciones de IA (agents.md, skills)
 
