@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class RegistroController extends Controller
 {
@@ -62,6 +63,12 @@ class RegistroController extends Controller
         Auth::login($usuario);
 
         $request->session()->regenerate();
+
+        /* Notificar a n8n para enviar el email de bienvenida por Mailtrap */
+        Http::post('http://localhost:5678/webhook/7de3c3c7-f06d-445a-98a4-14bb2b200e38', [
+            'nombre' => $usuario->nombre,
+            'email'  => $usuario->email,
+        ]);
 
         return redirect()->route('home');
     }
