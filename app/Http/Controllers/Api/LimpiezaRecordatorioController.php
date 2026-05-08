@@ -25,7 +25,7 @@ class LimpiezaRecordatorioController extends Controller
         $citas = Cita::with(['paciente', 'servicio'])
             ->whereBetween('fecha', [$inicioRango->toDateString(), $finRango->toDateString()])
             ->where('estado', Cita::ESTADO_COMPLETADA)
-            ->whereHas('servicio', fn($q) => $q->where('nombre', 'Limpieza'))
+            ->whereHas('servicio', fn($q) => $q->where('nombre', 'LIKE', '%impieza%'))
             ->get()
             // Elimina duplicados: si el paciente tuvo varias limpiezas, solo una vez
             ->unique('paciente_id')

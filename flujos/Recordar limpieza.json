@@ -1,0 +1,155 @@
+{
+  "name": "Recordar limpieza",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -464,
+        -16
+      ],
+      "id": "b85ef5c6-770d-4f89-9cfc-b325c7b9c248",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://purasonrisa.example.com/api/citas/limpieza/recordatorio",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -256,
+        -16
+      ],
+      "id": "48b85569-c4e2-4d1c-a462-02fffe7b1b53",
+      "name": "HTTP Request",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -48,
+        -16
+      ],
+      "id": "a1482ff2-3663-44ef-8ab1-84ee79d5b756",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        0
+      ],
+      "id": "55e3dbf5-04cf-4bba-a849-6e9c9f51c585",
+      "name": "Wait",
+      "webhookId": "6b89b36d-ddbd-402a-8219-9c3b3f870570"
+    },
+    {
+      "parameters": {
+        "fromEmail": "=admin@purasonrisa.test",
+        "toEmail": "={{ $json.email }}",
+        "subject": "¡Hace 6 meses de tu última limpieza - Recordatorio PuraSonrisa",
+        "html": "=<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Recordatorio de Limpieza Dental - PuraSonrisa</title>\n    <style>\n        * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n        body {\n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n            background-color: #f5f5f5;\n            padding: 20px 0;\n        }\n        .container {\n            max-width: 600px;\n            margin: 0 auto;\n            background: white;\n            border-radius: 12px;\n            overflow: hidden;\n            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n        }\n        .header {\n            background: linear-gradient(135deg, #08beff 0%, #0a9cd9 100%);\n            padding: 40px 20px;\n            text-align: center;\n            color: white;\n        }\n        .header h1 {\n            font-size: 28px;\n            margin-bottom: 10px;\n            font-weight: 600;\n        }\n        .header p {\n            font-size: 14px;\n            opacity: 0.95;\n        }\n        .content {\n            padding: 40px 30px;\n        }\n        .greeting {\n            font-size: 18px;\n            color: #333;\n            margin-bottom: 25px;\n            font-weight: 500;\n        }\n        .message {\n            color: #555;\n            line-height: 1.8;\n            margin-bottom: 20px;\n            font-size: 16px;\n        }\n        .highlight {\n            background-color: #fff8e6;\n            border-left: 4px solid #cc0247;\n            padding: 15px;\n            margin: 25px 0;\n            border-radius: 4px;\n        }\n        .highlight h3 {\n            color: #cc0247;\n            margin-bottom: 10px;\n            font-size: 16px;\n        }\n        .highlight ul {\n            margin-left: 20px;\n            color: #555;\n            font-size: 15px;\n        }\n        .highlight li {\n            margin-bottom: 8px;\n        }\n        .cta-button {\n            display: inline-block;\n            background: linear-gradient(135deg, #08beff 0%, #0a9cd9 100%);\n            color: white;\n            padding: 14px 40px;\n            text-decoration: none;\n            border-radius: 6px;\n            font-weight: 600;\n            margin-top: 20px;\n            font-size: 16px;\n            transition: transform 0.2s, box-shadow 0.2s;\n        }\n        .cta-button:hover {\n            transform: translateY(-2px);\n            box-shadow: 0 6px 16px rgba(8, 190, 255, 0.3);\n        }\n        .benefits {\n            display: grid;\n            grid-template-columns: 1fr 1fr;\n            gap: 15px;\n            margin: 30px 0;\n        }\n        .benefit-card {\n            background: #f9f9f9;\n            padding: 15px;\n            border-radius: 8px;\n            border-top: 3px solid #cc0247;\n            text-align: center;\n        }\n        .benefit-card .icon {\n            font-size: 28px;\n            margin-bottom: 10px;\n        }\n        .benefit-card .title {\n            color: #333;\n            font-weight: 600;\n            font-size: 14px;\n            margin-bottom: 5px;\n        }\n        .benefit-card .description {\n            color: #666;\n            font-size: 13px;\n        }\n        .divider {\n            height: 1px;\n            background: #e0e0e0;\n            margin: 30px 0;\n        }\n        .footer {\n            background: #f9f9f9;\n            padding: 20px 30px;\n            text-align: center;\n            color: #999;\n            font-size: 13px;\n            border-top: 1px solid #e0e0e0;\n        }\n        .footer a {\n            color: #08beff;\n            text-decoration: none;\n        }\n        .clinic-info {\n            margin-top: 15px;\n            font-size: 13px;\n            color: #666;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <!-- Header -->\n        <div class=\"header\">\n            <h1>¡Cuida tu sonrisa! 😁</h1>\n            <p>Es hora de tu limpieza dental</p>\n        </div>\n\n        <!-- Content -->\n        <div class=\"content\">\n            <div class=\"greeting\">Hola {{ $json.nombre }},</div>\n\n            <div class=\"message\">\n                Hace poco más de <strong>seis meses</strong> que realizaste tu última <strong>limpieza dental</strong> con nosotros en <strong>PuraSonrisa</strong>. Ha llegado el momento de mantener tu sonrisa en perfecto estado.\n            </div>\n\n            <!-- Benefits Section -->\n            <div class=\"benefits\">\n                <div class=\"benefit-card\">\n                    <div class=\"icon\">✨</div>\n                    <div class=\"title\">Prevención</div>\n                    <div class=\"description\">Evita caries y enfermedades bucales</div>\n                </div>\n                <div class=\"benefit-card\">\n                    <div class=\"icon\">😊</div>\n                    <div class=\"title\">Sonrisa Radiante</div>\n                    <div class=\"description\">Mantén tu brillo natural</div>\n                </div>\n            </div>\n\n            <!-- Highlight Box -->\n            <div class=\"highlight\">\n                <h3>🦷 ¿Por qué cada 6 meses?</h3>\n                <ul>\n                    <li>Elimina el sarro y la placa acumulada</li>\n                    <li>Previene la gingivitis y periodontitis</li>\n                    <li>Mantiene tu higiene bucal en niveles óptimos</li>\n                    <li>Detecta problemas antes de que se agraven</li>\n                </ul>\n            </div>\n\n            <div class=\"message\">\n                Reserva tu cita ahora y continúa con tu rutina de higiene dental. <strong>¡Te esperamos!</strong>\n            </div>\n\n            <a href=\"http://purasonrisa.example.com/reservas\" class=\"cta-button\">Reservar Limpieza Ahora</a>\n        </div>\n\n        <!-- Divider -->\n        <div class=\"divider\"></div>\n\n        <!-- Footer -->\n        <div class=\"footer\">\n            <p>PuraSonrisa - Tu Clínica Dental de Confianza</p>\n            <p class=\"clinic-info\">\n                📍 Ubicación | 📞 Teléfono<br>\n                <a href=\"http://purasonrisa.example.com/contacto\">Contacto</a> • \n                <a href=\"http://purasonrisa.example.com/\">Inicio</a>\n            </p>\n            <p style=\"margin-top: 15px; color: #bbb;\">\n                © 2026 PuraSonrisa. Todos los derechos reservados.\n            </p>\n        </div>\n    </div>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "9fe61969-0e3f-4795-b5f2-8516b0ad30a6",
+      "name": "Send an Email",
+      "webhookId": "a63ee620-ec4e-4520-8ae2-7ae6cf6bd890",
+      "credentials": {
+        "smtp": {
+          "id": "2R0lTGzMcTUB97gN",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "90418e81-6590-4694-8716-9a15ef9ae95f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e0c96edf8cf8c99bfbe1b0ee2267fe68f7e8af2c7cd81b4c0e9f820285cb7be"
+  },
+  "id": "4rQACy2zX8CRuVuq",
+  "tags": []
+}
