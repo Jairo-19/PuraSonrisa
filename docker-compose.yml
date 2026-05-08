@@ -50,6 +50,14 @@ services:
     # "unless-stopped" = reinicia siempre excepto si lo paras manualmente
     restart: unless-stopped
 
+    # Permite que n8n acceda a servicios del host (XAMPP/Laravel) desde dentro del contenedor.
+    # "host-gateway" se resuelve a la IP del host en tiempo de ejecución.
+    # Necesario porque Docker aísla la red y "localhost" dentro del contenedor
+    # apunta al propio contenedor, no a la máquina host.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "purasonrisa.example.com:host-gateway"
+
   # -----------------------------------------------------------
   #  cloudflared — Túnel de Cloudflare
   #  Expone n8n a internet SIN abrir puertos en el router.

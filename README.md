@@ -327,18 +327,12 @@ npm run dev
 
 ---
 
-### Paso 8 — Iniciar el servidor
+### Paso 8 — Acceder a la aplicación
 
-Arranca el servidor de desarrollo de Laravel:
-
-```bash
-php artisan serve
-```
-
-La aplicación estará disponible en:
+La aplicación está disponible en el VirtualHost que configuraste:
 
 ```
-http://localhost:8000
+http://purasonrisa.example.com/
 ```
 
 ---
@@ -355,5 +349,91 @@ php artisan key:generate
 # (configurar .env con los datos de la BD)
 php artisan migrate
 npm run build
-php artisan serve
+```
+
+---
+
+## 🤖 n8n + Cloudflare Tunnel (Docker)
+
+El proyecto usa **n8n** como plataforma de automatización (recordatorios de citas por email, emails de bienvenida, etc.) y **Cloudflare Tunnel** para exponer n8n a internet sin abrir puertos en el router. Ambos se gestionan con el `docker-compose.yml` incluido en el repositorio.
+
+### ✅ Requisitos
+
+- Docker Desktop instalado: https://www.docker.com/products/docker-desktop
+
+### Paso 1 — VirtualHost en XAMPP
+
+n8n necesita acceder a la API de Laravel desde dentro del contenedor. Para ello, Laravel debe estar accesible mediante un VirtualHost de XAMPP, no solo en `localhost:8000`.
+
+Añade este bloque al archivo `C:\xampp\apache\conf\extra\httpd-vhosts.conf`:
+
+```apache
+<VirtualHost *:80>
+    ServerAdmin admin
+    DocumentRoot "C:\xampp\htdocs\PuraSonrisa\public"
+    ServerName PuraSonrisa.example.com
+    ServerAlias www.dummy-host.example.com
+
+    # Permitir que .htaccess reescriba URLs (necesario para Laravel)
+    <Directory "C:\xampp\htdocs\PuraSonrisa\public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog "logs/dummy-host.example.com-error.log"
+    CustomLog "logs/dummy-host.example.com-access.log" common
+</VirtualHost>
+```
+
+Luego reinicia Apache desde el panel de XAMPP.
+
+También añade esta línea al archivo `C:\Windows\System32\drivers\etc\hosts` (abre el Bloc de notas como administrador):
+
+```
+127.0.0.1   PuraSonrisa.example.com
+```
+
+### Paso 2 — Levantar los contenedores
+
+Desde el directorio raíz del proyecto:
+
+```bash
+docker volume create n8n_data
+docker compose up -d
+```
+
+n8n estará disponible en `http://localhost:5678`.
+
+Para ver la URL pública temporal del túnel de Cloudflare:
+
+```bash
+docker compose logs -f cloudflared
+```
+
+### Paso 3 — Importar los flujos de n8n
+
+Los flujos de automatización están guardados en la carpeta `flujos/` del proyecto. Para cargarlos en n8n:
+
+1. Abre n8n en `http://localhost:5678`
+2. Ve a **Workflows → Import from file**
+3. Selecciona el archivo `.json` correspondiente de la carpeta `flujos/`
+4. Guarda y activa el flujo
+
+### 📡 Endpoint que usan los flujos
+
+Los flujos de n8n llaman a este endpoint de Laravel para obtener las citas del día siguiente:
+
+```
+http://purasonrisa.example.com/api/citas/manana
+```
+
+Devuelve un JSON con las citas confirmadas del día siguiente: nombre del paciente, email, fecha, hora y servicio.
+
+### 📋 Comandos Docker
+
+```bash
+docker compose up -d      # Arrancar
+docker compose stop       # Parar
+docker compose down       # Eliminar contenedores (los datos se conservan)
+docker compose logs n8n   # Ver logs de n8n
 ```

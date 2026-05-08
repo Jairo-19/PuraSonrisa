@@ -1,0 +1,71 @@
+{
+  "name": "Mensaje de bienvenida",
+  "nodes": [
+    {
+      "parameters": {
+        "fromEmail": "admin@purasonrisa.test",
+        "toEmail": "={{ $json.body.email }}",
+        "subject": "bienvenido",
+        "html": "=<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n        .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n        .header { background: #08beff; color: #fffbf4; padding: 20px; text-align: center; border-radius: 5px; }\n        .content { padding: 20px; background: #f9f9f9; border-radius: 5px; margin: 20px 0; }\n        .footer { text-align: center; color: #666; font-size: 12px; }\n        a { color: #cc0247; text-decoration: none; }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"header\">\n            <h1>¡Bienvenido a PuraSonrisa! 🦷</h1>\n        </div>\n        \n        <div class=\"content\">\n            <p>Hola <strong>{{ $json.body.nombre }}</strong>,</p>\n            \n            <p>Te damos la más cordial bienvenida a <strong>PuraSonrisa</strong>, tu clínica dental de confianza.</p>\n            \n            <p>Tu cuenta ha sido creada exitosamente. Ya puedes:</p>\n            <ul>\n                <li>Reservar citas con nuestros dentistas</li>\n                <li>Ver tu historial clínico</li>\n                <li>Gestionar tus citas</li>\n            </ul>\n        </div>\n        \n        <div class=\"footer\">\n            <p>PuraSonrisa | Clínica Dental | contacto@purasonrisa.com</p>\n        </div>\n    </div>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        368,
+        -64
+      ],
+      "id": "5e8b4bb7-13d7-4fbb-8855-5274b0e253cb",
+      "name": "Send an Email",
+      "webhookId": "40fbb765-56d5-4f91-915a-7df08ee78338",
+      "credentials": {
+        "smtp": {
+          "id": "2R0lTGzMcTUB97gN",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "7de3c3c7-f06d-445a-98a4-14bb2b200e38",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        -32
+      ],
+      "id": "1a2aaadf-1f43-4947-9775-2986157c1eef",
+      "name": "Webhook",
+      "webhookId": "7de3c3c7-f06d-445a-98a4-14bb2b200e38"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5de4927f-3b82-469b-b5fb-afee331b43a5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e0c96edf8cf8c99bfbe1b0ee2267fe68f7e8af2c7cd81b4c0e9f820285cb7be"
+  },
+  "id": "vvtAWUNdTroneDhK",
+  "tags": []
+}
