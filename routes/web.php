@@ -15,16 +15,13 @@ use App\Http\Controllers\Admin\AdminEstadisticasController;
 use App\Http\Controllers\CitasController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\Api\CitasMananaController;
+use App\Http\Controllers\Api\LimpiezaRecordatorioController;
 
 //Aqui defino la ruta para la pagina de inicio
 Route::get('/', HomeController::class)->name('home');
 
 //Aqui defino la ruta para la pagina de servicios
 Route::get('/servicios', [ServiciosController::class, 'index'])->name('servicios');
-
-
-
-
 
 //Aqui defino la ruta de contacto 
 //es una view porque no necesito un controlador para esta pagina, solo mostrar informacion de contacto
@@ -44,6 +41,9 @@ Route::get('/api/chatbot/servicios', function() {
 
 // API: Citas de mañana — usada por n8n para enviar recordatorios por email
 Route::get('/api/citas/manana', CitasMananaController::class)->name('api.citas.manana');
+
+// API: Recordatorio de limpieza — usada por n8n para enviar recordatorios cada 6 meses
+Route::get('/api/citas/limpieza/recordatorio', LimpiezaRecordatorioController::class)->name('api.limpieza.recordatorio');
 
 // Confirmar reserva — requiere estar autenticado como cliente
 Route::post('/reservas', [CitasController::class, 'store'])->middleware('auth')->name('citas.store');
