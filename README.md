@@ -34,8 +34,9 @@
 
 ### 🔹 Automatización & IA
 - n8n
-  -  Recordatorio de Cita por Email
+  -  Recordatorio de Cita por Email (día anterior)
   -  Email de bienvenida automático
+  -  Recordatorio de Limpieza (cada 6 meses)
 - Mailtrap (entorno de desarrollo)
 - Funciones de IA (agents.md, skills)
 
