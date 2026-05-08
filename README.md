@@ -121,6 +121,8 @@ hora_inicio_B < hora_fin_solicitada AND hora_fin_B > hora_inicio_solicitada
 - Editar y eliminar servicios existentes
 - CRUD completo accesible solo para empleados
 
+> **Servicios inactivos:** Un servicio marcado como inactivo (`activo = false`) **no aparece en el formulario de reserva público** que ven los clientes. Sin embargo, los empleados sí pueden asignarlo al crear una cita desde el panel admin. Esto se usa para servicios internos como la *Revisión de Ortodoncia (0€)*, que solo aplica a pacientes con ortodoncia previa y debe ser gestionada directamente por el empleado.
+
 ### 👥 Gestión de Usuarios (Admin)
 - Listado de todos los usuarios (`/admin/usuarios`)
 - Crear nuevo usuario desde el panel (`/admin/usuarios/crear`) con asignación de rol

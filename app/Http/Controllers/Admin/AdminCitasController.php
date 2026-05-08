@@ -21,7 +21,10 @@ class AdminCitasController extends Controller
     public function create(Request $request): View
     {
         $clientes      = Usuario::clientes()->orderBy('nombre')->get();
-        $servicios     = Servicio::activos()->orderBy('nombre')->get();
+        // Se cargan todos los servicios (activos e inactivos) para que el empleado
+        // pueda asignar servicios internos como la revisión de ortodoncia (0€),
+        // que están inactivos y no son visibles para los clientes en el formulario público.
+        $servicios     = Servicio::orderBy('nombre')->get();
         $fechaDefault  = $request->query('fecha', now()->toDateString());
 
         return view('admin.citas.crear', compact('clientes', 'servicios', 'fechaDefault'));
