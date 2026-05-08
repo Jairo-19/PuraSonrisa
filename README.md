@@ -429,7 +429,20 @@ http://purasonrisa.example.com/api/citas/manana
 
 Devuelve un JSON con las citas confirmadas del día siguiente: nombre del paciente, email, fecha, hora y servicio.
 
-### 📋 Comandos Docker
+### � Correos con Mailtrap
+
+En desarrollo, todos los correos (recordatorios de citas, emails de bienvenida, etc.) se envían a **Mailtrap** — un servicio que los intercepta de forma segura. **No se envían correos reales**.
+
+Para verificar los correos "capturados":
+
+1. Accede a https://mailtrap.io
+2. Inicia sesión con tu cuenta
+3. Ve a **Inbox → PuraSonrisa** (o el que hayas configurado)
+4. Verás todos los correos que n8n intentó enviar durante las pruebas
+
+Esto permite probar el flujo sin enviar emails ficticios a direcciones reales.
+
+### �📋 Comandos Docker
 
 ```bash
 docker compose up -d      # Arrancar

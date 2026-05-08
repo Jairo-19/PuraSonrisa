@@ -1,0 +1,168 @@
+{
+  "name": "Recordar cita",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "80951949-7bdc-41d3-acc5-00606dc5cd73",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://purasonrisa.example.com/api/citas/manana",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "58c6c99f-aabf-4bd9-ae66-a3f30e989ac1",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "b7da35a4-20ad-4e9c-af4c-3b2b49089034",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        -16
+      ],
+      "id": "b4afc4ac-1728-4f79-b8ee-37a0d1ecabe2",
+      "name": "Wait1",
+      "webhookId": "d7dd1953-6792-4590-84d0-153ac51489a2"
+    },
+    {
+      "parameters": {
+        "fromEmail": "admin@purasonrisa.test",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Recordatorio de cita pendiente",
+        "html": "=<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }\n        .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n        .header { background: #08beff; color: #fffbf4; padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; }\n        .header h1 { margin: 0; font-size: 24px; }\n        .content { background: #fffbf4; padding: 25px; border: 1px solid #e0e0e0; }\n        .cita-box { background: #ffffff; border-left: 4px solid #cc0247; padding: 15px 20px; margin: 20px 0; border-radius: 4px; }\n        .cita-box p { margin: 6px 0; }\n        .footer { text-align: center; color: #999; font-size: 12px; padding: 15px; }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"header\">\n            <h1>🦷 Recordatorio de Cita</h1>\n        </div>\n\n        <div class=\"content\">\n            <p>Hola <strong>{{ $json.nombre }}</strong>,</p>\n\n            <p>Te recordamos que mañana tienes una cita en <strong>PuraSonrisa</strong>:</p>\n\n            <div class=\"cita-box\">\n                <p>📅 <strong>Fecha:</strong> {{ $json.fecha }}</p>\n                <p>🕐 <strong>Hora:</strong> {{ $json.hora_inicio }}</p>\n                <p>🦷 <strong>Servicio:</strong> {{ $json.servicio }}</p>\n            </div>\n\n            <p>Si necesitas cancelar o modificar tu cita, contáctanos con antelación.</p>\n            <p>¡Te esperamos!</p>\n        </div>\n\n        <div class=\"footer\">\n            <p>PuraSonrisa | Clínica Dental | contacto@purasonrisa.com</p>\n        </div>\n    </div>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        912,
+        0
+      ],
+      "id": "4bd22a87-b9af-46ba-9fa6-afb1ef17e9c2",
+      "name": "Send an Email1",
+      "webhookId": "362ff3f5-5cc5-4152-8f35-8c4c058e2816",
+      "credentials": {
+        "smtp": {
+          "id": "2R0lTGzMcTUB97gN",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## El tiempo de espera es por el pan gratuito de mailtrap\n\n",
+        "height": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        608,
+        -336
+      ],
+      "typeVersion": 1,
+      "id": "4ec65724-7cfc-44a2-a0b5-f87e9838c8f2",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Send an Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "131b2696-6f94-48ad-a6cc-18a95e644d19",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e0c96edf8cf8c99bfbe1b0ee2267fe68f7e8af2c7cd81b4c0e9f820285cb7be"
+  },
+  "id": "ps5zGy9h4hRHo8Fe",
+  "tags": []
+}
