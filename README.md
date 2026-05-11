@@ -37,6 +37,8 @@
   -  Recordatorio de Cita por Email (día anterior)
   -  Email de bienvenida automático
   -  Recordatorio de Limpieza (cada 6 meses)
+  -  Encuestas de Satisfacción a Clientes (mensual, 28 de cada mes)
+  -  Resumen de Encuestas al Dueño (mensual con retraso de 1 mes)
 - Mailtrap (entorno de desarrollo)
 - Funciones de IA (agents.md, skills)
 
@@ -130,7 +132,43 @@ hora_inicio_B < hora_fin_solicitada AND hora_fin_B > hora_inicio_solicitada
 - Editar datos de cualquier usuario existente
 - CRUD completo accesible solo para empleados
 
-### 🔐 Autenticación y Validaciones
+### � Flujos de n8n Detallados
+
+#### 1️⃣ Recordatorio de Cita (Día Anterior)
+- **Trigger:** Schedule diario a las 10:00 AM
+- **Endpoint:** `GET /api/citas/manana`
+- **Acción:** Envía email a paciente recordando cita de mañana
+- **Plantilla:** Email con detalles de la cita (fecha, hora, servicio, consulta)
+
+#### 2️⃣ Bienvenida Automática
+- **Trigger:** Nuevo usuario registrado (webhook manual)
+- **Acción:** Envía email de bienvenida al cliente
+- **Plantilla:** Email HTML con introducción a la clínica
+
+#### 3️⃣ Recordatorio de Limpieza (Cada 6 Meses)
+- **Trigger:** Schedule mensual el día 1 de cada mes
+- **Endpoint:** `GET /api/citas/limpieza/recordatorio`
+- **Acción:** Envía email a pacientes que tuvieron limpieza hace ~6 meses
+- **Plantilla:** Recordatorio de cita de limpieza con CTA para reservar
+- **Filtrado:** Solo busca servicios que contengan "limpieza" en el nombre
+
+#### 4️⃣ Encuestas de Satisfacción (Clientes)
+- **Trigger:** Schedule mensual el 28 de cada mes a las 00:00 AM
+- **Endpoint:** `GET /api/pacientes/encuesta`
+- **Acción:** Envía Google Form a clientes únicos que tuvieron cita en últimos 7 días
+- **Plantilla:** Email HTML con botón que abre Google Form en nueva pestaña
+- **Google Form:** https://docs.google.com/forms/d/e/1FAIpQLSdS65u1lH23CaCEtRLaA2M1fFeayW84nmfhqb1KFYM0byWL1w/viewform
+
+#### 5️⃣ Resumen de Encuestas (Dueño)
+- **Trigger:** Schedule mensual el 28 de cada mes a las 01:00 AM (después de flujo de clientes)
+- **Fuente:** Google Sheets (respuestas automáticas del Google Form)
+- **Acción:** Agrega respuestas del mes anterior y envía resumen al dueño
+- **Email:** Resumen con gráficos y estadísticas de satisfacción
+- **Nota:** Se envía con retraso de 1 mes (respuestas de enero llegan al dueño en febrero)
+
+---
+
+### �🔐 Autenticación y Validaciones
 
 - Login con email y contraseña; opción "Recordarme"
 - Pantalla de carga animada (`/login/cargando`) antes de mostrar el formulario de login
@@ -422,15 +460,15 @@ Los flujos de automatización están guardados en la carpeta `flujos/` del proye
 3. Selecciona el archivo `.json` correspondiente de la carpeta `flujos/`
 4. Guarda y activa el flujo
 
-### 📡 Endpoint que usan los flujos
+### 📡 Endpoints que usan los flujos
 
-Los flujos de n8n llaman a este endpoint de Laravel para obtener las citas del día siguiente:
+Los flujos de n8n llaman a estos endpoints de Laravel:
 
-```
-http://purasonrisa.example.com/api/citas/manana
-```
-
-Devuelve un JSON con las citas confirmadas del día siguiente: nombre del paciente, email, fecha, hora y servicio.
+| Endpoint | Propósito | Devuelve |
+|----------|-----------|----------|
+| `GET /api/citas/manana` | Citas confirmadas del día siguiente | Array de citas (nombre, email, fecha, hora, servicio) |
+| `GET /api/citas/limpieza/recordatorio` | Pacientes con cita de limpieza hace ~6 meses | Array de pacientes únicos (nombre, email) |
+| `GET /api/pacientes/encuesta` | Clientes que tuvieron cita en los últimos 7 días | Array de pacientes únicos (nombre, email) |
 
 ### � Correos con Mailtrap
 

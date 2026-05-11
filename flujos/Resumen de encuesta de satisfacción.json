@@ -1,0 +1,75 @@
+{
+  "name": "Resumen de encuesta de satisfacción",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtDayOfMonth": 28
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "578b1b8a-37da-4260-b3ba-0047d14615b6",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "fromEmail": "admin@purasonrisa.test",
+        "toEmail": "admin@purasonrisa.test",
+        "subject": "Resumen de encuesta de satisfacción",
+        "html": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Resumen de las encuestas</title>\n    <style>\n        * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n        body {\n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n            min-height: 100vh;\n            background-color: #D3C7FF;\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            padding: 20px;\n        }\n        .container {\n            width: 100%;\n            max-width: 700px;\n            background: white;\n            border-radius: 12px;\n            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);\n            padding: 40px;\n        }\n        h1 {\n            text-align: center;\n            color: #cc0247;\n            margin-bottom: 10px;\n            font-size: 24px;\n        }\n        .subtitle {\n            text-align: center;\n            color: #666;\n            margin-bottom: 30px;\n            font-size: 14px;\n        }\n        .cta-button {\n            display: inline-block;\n            background: linear-gradient(135deg, #cc0247 0%, #a80237 100%);\n            color: white;\n            padding: 16px 45px;\n            text-decoration: none;\n            border-radius: 6px;\n            font-weight: 600;\n            margin-top: 20px;\n            font-size: 16px;\n            text-align: center;\n            width: 100%;\n            box-sizing: border-box;\n            transition: transform 0.2s, box-shadow 0.2s;\n        }\n        .cta-button:hover {\n            transform: translateY(-2px);\n            box-shadow: 0 6px 16px rgba(204, 2, 71, 0.3);\n        }\n        iframe {\n            width: 100%;\n            min-height: 2200px;\n            border: none;\n            border-radius: 8px;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <h1>Resumen de las encuestas</h1>\n        <p class=\"subtitle\">Tu opinión nos ayuda a mejorar</p>\n        \n        <a href=\"https://docs.google.com/forms/d/1JNcJwyYSUUPn-9cG9l10zEB1yiZT_WQWHLYpqS39NAY/edit#responses\" class=\"cta-button\" target=\"_blank\">Resumen de las encuestas</a>\n    </div>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "4dd663ba-9f9c-4cc8-af71-c2565234a1d6",
+      "name": "Send an Email",
+      "webhookId": "052ff74f-d131-457c-9cfe-62be897208a7",
+      "credentials": {
+        "smtp": {
+          "id": "2R0lTGzMcTUB97gN",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "52de3818-2d60-4152-b964-5618b2d67921",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e0c96edf8cf8c99bfbe1b0ee2267fe68f7e8af2c7cd81b4c0e9f820285cb7be"
+  },
+  "id": "JHXPVaC9fyiNxQhp",
+  "tags": []
+}
