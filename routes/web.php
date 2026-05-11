@@ -16,6 +16,7 @@ use App\Http\Controllers\CitasController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\Api\CitasMananaController;
 use App\Http\Controllers\Api\LimpiezaRecordatorioController;
+use App\Http\Controllers\Api\PacientesEncuestaController;
 
 //Aqui defino la ruta para la pagina de inicio
 Route::get('/', HomeController::class)->name('home');
@@ -44,6 +45,9 @@ Route::get('/api/citas/manana', CitasMananaController::class)->name('api.citas.m
 
 // API: Recordatorio de limpieza — usada por n8n para enviar recordatorios cada 6 meses
 Route::get('/api/citas/limpieza/recordatorio', LimpiezaRecordatorioController::class)->name('api.limpieza.recordatorio');
+
+// API: Encuesta de satisfacción — usada por n8n para enviar encuestas de satisfacción
+Route::get('/api/pacientes/encuesta', PacientesEncuestaController::class)->name('api.pacientes.encuesta');
 
 // Confirmar reserva — requiere estar autenticado como cliente
 Route::post('/reservas', [CitasController::class, 'store'])->middleware('auth')->name('citas.store');
