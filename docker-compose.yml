@@ -9,8 +9,9 @@
 #  Arrancar todo:              docker-compose up -d
 #  Parar todo:                 docker-compose stop
 #  Arrancar tras parar:        docker-compose start
-#  Eliminar contenedores:      docker-compose down
-#  Eliminar TODO (con datos):  docker-compose down -v
+#  Eliminar contenedores:                      docker-compose down
+#  Eliminar TODO (contenedores+volúmenes):      docker-compose down -v
+#  Eliminar TODO (contenedores+volúmenes+imgs): docker-compose down -v --rmi all
 #
 #  COMANDOS POR CONTENEDOR:
 #  ------------------------
@@ -86,7 +87,6 @@ services:
     restart: unless-stopped
 
 # Declaración del volumen persistente de n8n
-# "external: true" indica que el volumen ya existe y Docker Compose no debe recrearlo
+# Docker Compose crea el volumen automáticamente si no existe
 volumes:
   n8n_data:
-    external: true

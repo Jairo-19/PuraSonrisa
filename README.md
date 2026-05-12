@@ -439,7 +439,6 @@ También añade esta línea al archivo `C:\Windows\System32\drivers\etc\hosts` (
 Desde el directorio raíz del proyecto:
 
 ```bash
-docker volume create n8n_data
 docker compose up -d
 ```
 
@@ -470,18 +469,54 @@ Los flujos de n8n llaman a estos endpoints de Laravel:
 | `GET /api/citas/limpieza/recordatorio` | Pacientes con cita de limpieza hace ~6 meses | Array de pacientes únicos (nombre, email) |
 | `GET /api/pacientes/encuesta` | Clientes que tuvieron cita en los últimos 7 días | Array de pacientes únicos (nombre, email) |
 
-### � Correos con Mailtrap
+### 📧 n8n + Mailtrap — Configuración de correos
 
 En desarrollo, todos los correos (recordatorios de citas, emails de bienvenida, etc.) se envían a **Mailtrap** — un servicio que los intercepta de forma segura. **No se envían correos reales**.
 
-Para verificar los correos "capturados":
+> ⚠️ **Las credenciales de Mailtrap son personales.** Cada usuario tiene su propio usuario y contraseña SMTP en Mailtrap. Las credenciales **no están en el `.env`** ni en los archivos del proyecto — se almacenan dentro de n8n (en su base de datos interna) y debes configurarlas tú mismo tras importar los flujos.
+
+#### Paso A — Obtener tus credenciales SMTP de Mailtrap
+
+1. Accede a https://mailtrap.io e inicia sesión (o crea una cuenta gratuita)
+2. Ve a **Sandbox → Inboxes**
+3. Abre el inbox que quieras usar (ej. *My Inbox*)
+4. Haz clic en la pestaña **Ajustes** (Settings)
+5. Anota los valores:
+   - **Host:** `sandbox.smtp.mailtrap.io`
+   - **Port:** `587`
+   - **Username:** (tu usuario único)
+   - **Password:** (tu contraseña única)
+
+#### Paso B — Crear la credencial SMTP en n8n
+
+1. Abre n8n en `http://localhost:5678`
+2. Haz clic en tu icono de usuario (esquina inferior izquierda) → **Personal → Credenciales**
+3. Pulsa **Nueva credencial** y busca **SMTP**
+4. Rellena los campos con los valores del Paso A:
+   - **Host:** `sandbox.smtp.mailtrap.io`
+   - **Port:** `587`
+   - **User:** tu username de Mailtrap
+   - **Password:** tu contraseña de Mailtrap
+   - **SSL:** desactivado (toggle en gris)
+   - **STARTTLS:** activado (toggle en verde)
+5. Guarda la credencial con un nombre reconocible, ej. *Mailtrap SMTP*
+
+#### Paso C — Asignar la credencial a los flujos
+
+Después de importar los flujos (Paso 3), cada flujo que envíe correos tendrá nodos **Send Email** con la credencial en rojo (sin asignar). Para cada uno:
+
+1. Abre el flujo
+2. Haz clic en cada nodo de tipo **Send Email**
+3. En el campo **Credential**, selecciona *Mailtrap SMTP* (la que acabas de crear)
+4. Guarda y activa el flujo
+
+#### Verificar correos capturados
+
+Una vez configurado, todos los correos que n8n intente enviar aparecerán en tu inbox de Mailtrap:
 
 1. Accede a https://mailtrap.io
-2. Inicia sesión con tu cuenta
-3. Ve a **Inbox → PuraSonrisa** (o el que hayas configurado)
-4. Verás todos los correos que n8n intentó enviar durante las pruebas
-
-Esto permite probar el flujo sin enviar emails ficticios a direcciones reales.
+2. Ve a **Email Testing → Inboxes → My Inbox**
+3. Verás todos los correos enviados durante las pruebas
 
 ### �📋 Comandos Docker
 
